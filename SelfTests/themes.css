@@ -1,0 +1,25 @@
+:root {
+    --main-font-size: 16px;
+    --main-font: arial;
+    --active-button-color: green;
+
+    --background-color: #1b1d1f;
+    --header-title-color: white;
+
+    --buttons-bg-color: #d3dde7;
+    --buttons-text-color: #1b1d1f;
+    --buttons-shadow: #d3dde7;
+    --buttons-hover:#68737e;
+    --buttons-hover-text-color:#f8fcff;
+}
+
+.light{
+    --background-color: #f0e4d9;
+    --header-title-color: black;
+
+    --buttons-bg-color: #6d757e;
+    --buttons-text-color: #f8fcff;
+    --buttons-shadow: #7e8a95;
+    --buttons-hover:#b6c1cc;
+    --buttons-hover-text-color:#1b1d1f;
+}
