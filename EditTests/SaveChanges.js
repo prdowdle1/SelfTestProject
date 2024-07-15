@@ -14,12 +14,15 @@ function saveChanges(){
 		let question_count = edit_test_div.childElementCount;
 		let new_question_count=1;
 		let test_name=loadedTestName;
+		let found_at_least_one_Q = false;
 		
 		for(let i = 0;i<question_count;i++){
 			let question_div=edit_test_div.children[i];
 			let hidden = question_div.style.display;
+			let found_at_least_one_opt = false;
 
 			if(hidden!='none'){
+				found_at_least_one_Q=true;
 				let question_format = question_div.getAttribute('data-type');
 				let question_text_div = question_div.getElementsByClassName('edit-question-text-box');
 				let question_text = question_text_div[0].value;
@@ -34,17 +37,31 @@ function saveChanges(){
 				}
 				
 				let thisQ_insert = {test_name: test_name, num_in_test: new_question_count, question: question_text, format: question_format};
-				
 				if(question_format!="Fill in the Blank"){//fill in has no options div
 					let options_div_id = 'options'+(i+1);//plus one cus test nums start at 1
 					let options_div = document.getElementById(options_div_id);
 					let num_options = options_div.childElementCount;
-						
+
+					for(let j = 0;j<num_options;j++){//get all non hidden options
+						let this_option = options_div.children[j];
+						let isHidden = this_option.style.display;
+						if(isHidden!='none'){
+							found_at_least_one_opt=true;
+							let tmp_id = (i+1)+'opt'+j+'text';
+							let opt_text = document.getElementById(tmp_id).value;
+							let this_opt = 'opt'+new_opt_count;
+							new_opt_count++;
+							thisQ_insert[this_opt]=opt_text;
+						}
+					}
+					if(!found_at_least_one_opt){
+						document.getElementById('error').innerHTML = "No options for number "+new_question_count+"!";
+						return;
+					}
 						
 					if(question_format=='Multiple Choice'){
 						thisQ_insert.num_answers=1;
 						let options_buttons=document.getElementsByName(i+1);
-						let correct_answer_text;
 						let correct_answer_option;
 						
 						for(k=0;k<options_buttons.length;k++){//get selected answer
@@ -62,21 +79,32 @@ function saveChanges(){
 						}
 						thisQ_insert.answer0=correct_answer_option;
 					}else if(question_format=='Drop Down'){
-						//get answers here!!
+						let found_at_least_one_ans = false;
+						let answers_grid_id = 'dropGrid' + (i+1);
+						let answers_grid = document.getElementById(answers_grid_id);
+						let num_answers = answers_grid.childElementCount;
+						let new_ans_count = 0;
+
+						for(let k = 0;k<num_answers;k++){
+							let ans_div_id = (i+1)+"ans"+k+"div";
+							let ans_display = document.getElementById(ans_div_id).style.display;
+							if(ans_display!="none"){
+								found_at_least_one_ans=true;
+								let this_ans_id = (i+1)+"ans"+k;
+								let this_ans_opt=document.getElementById(this_ans_id).value;
+								let this_ans = "ans"+new_ans_count;
+								thisQ_insert[this_ans]=this_ans_opt;
+								new_ans_count++
+							}
+						}
+						if(!found_at_least_one_ans){
+							document.getElementById('error').innerHTML = "No answer for number "+new_question_count+"!";
+							return;
+						}
+
 					}
 				
 					console.log(question_div);
-					for(let j = 0;j<num_options;j++){//get all non hidden options
-						let this_option = options_div.children[j];
-						let isHidden = this_option.style.display;
-						if(isHidden!='none'){
-							let tmp_id = (i+1)+'opt'+j+'text';
-							let opt_text = document.getElementById(tmp_id).value;
-							let this_opt = 'opt'+new_opt_count;
-							new_opt_count++;
-							thisQ_insert[this_opt]=opt_text;
-						}
-					}
 				}
 				if(img_count>0){//get images, this works for all three types of questions
 					for(let m = 0;m<img_count;m++){
@@ -98,21 +126,24 @@ function saveChanges(){
 				db_inserts.push(thisQ_insert);
 				new_question_count++;
 			}
-		//console.log(question_div);
+		}
+		if(!found_at_least_one_Q){
+			document.getElementById('error').innerHTML = "Theres no questions lol?";
+			return;
 		}
 		console.log(db_inserts);
 		
 		
 		
-		let req = [test_name,username];
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.onreadystatechange = function (){
-			if(xmlHttp.readyState==4&&xmlHttp.status==200){
-				console.log(xmlHttp.responseText);
-				//submitChanges();
-			}
-		}
-		xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/saveData.pl',true);
-		xmlHttp.send(req);
+		// let req = [test_name,username];
+		// var xmlHttp = new XMLHttpRequest();
+		// xmlHttp.onreadystatechange = function (){
+		// 	if(xmlHttp.readyState==4&&xmlHttp.status==200){
+		// 		console.log(xmlHttp.responseText);
+		// 		//submitChanges();
+		// 	}
+		// }
+		// xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/saveData.pl',true);
+		// xmlHttp.send(req);
     }
 }
