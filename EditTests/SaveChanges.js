@@ -79,7 +79,6 @@ function saveChanges(){
 						}
 						thisQ_insert.answer0=correct_answer_option;
 					}else if(question_format=='Drop Down'){
-						let found_at_least_one_ans = false;
 						let answers_grid_id = 'dropGrid' + (i+1);
 						let answers_grid = document.getElementById(answers_grid_id);
 						let num_answers = answers_grid.childElementCount;
@@ -89,7 +88,6 @@ function saveChanges(){
 							let ans_div_id = (i+1)+"ans"+k+"div";
 							let ans_display = document.getElementById(ans_div_id).style.display;
 							if(ans_display!="none"){
-								found_at_least_one_ans=true;
 								let this_ans_id = (i+1)+"ans"+k;
 								let this_ans_opt=document.getElementById(this_ans_id).value;
 								let this_ans = "ans"+new_ans_count;
@@ -97,14 +95,25 @@ function saveChanges(){
 								new_ans_count++
 							}
 						}
-						if(!found_at_least_one_ans){
+						if(new_ans_count==0){
 							document.getElementById('error').innerHTML = "No answer for number "+new_question_count+"!";
 							return;
 						}
+						thisQ_insert.num_answers=new_ans_count;
 
 					}
-				
 					console.log(question_div);
+				}
+				if(question_format=='Fill in the Blank'){
+					thisQ_insert.num_answers=1;
+					thisQ_insert.ans0='opt0';
+					let this_ans_id = (i+1)+"ans";
+					let this_ans_text=document.getElementById(this_ans_id).value;
+					if(this_ans_text==''){
+						document.getElementById('error').innerHTML = "No answer for number "+new_question_count+"!";
+						return;
+					}
+					thisQ_insert.opt0 = this_ans_text;
 				}
 				if(img_count>0){//get images, this works for all three types of questions
 					for(let m = 0;m<img_count;m++){
