@@ -140,19 +140,18 @@ function saveChanges(){
 			document.getElementById('error').innerHTML = "Theres no questions lol?";
 			return;
 		}
-		console.log(db_inserts);
-		
-		
-		
-		// let req = [test_name,username];
-		// var xmlHttp = new XMLHttpRequest();
-		// xmlHttp.onreadystatechange = function (){
-		// 	if(xmlHttp.readyState==4&&xmlHttp.status==200){
-		// 		console.log(xmlHttp.responseText);
-		// 		//submitChanges();
-		// 	}
-		// }
-		// xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/saveData.pl',true);
-		// xmlHttp.send(req);
+
+		let req = [test_name,username, db_inserts];
+
+
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange = function (){
+			if(xmlHttp.readyState==4&&xmlHttp.status==200){
+				console.log(xmlHttp.responseText);
+				//submitChanges();
+			}
+		}
+		xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/saveData.pl',true);
+		xmlHttp.send(JSON.stringify(req));
     }
 }
