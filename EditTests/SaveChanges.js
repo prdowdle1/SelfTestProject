@@ -140,9 +140,7 @@ function saveChanges(){
 			document.getElementById('error').innerHTML = "Theres no questions lol?";
 			return;
 		}
-
-		let req = [test_name,username, db_inserts];
-
+		let req = {test_name:test_name,username:username,data:db_inserts};
 
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function (){
