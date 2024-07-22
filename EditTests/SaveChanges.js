@@ -90,7 +90,7 @@ function saveChanges(){
 							if(ans_display!="none"){
 								let this_ans_id = (i+1)+"ans"+k;
 								let this_ans_opt=document.getElementById(this_ans_id).value;
-								let this_ans = "ans"+new_ans_count;
+								let this_ans = "answer"+new_ans_count;
 								thisQ_insert[this_ans]=this_ans_opt;
 								new_ans_count++
 							}
@@ -106,7 +106,7 @@ function saveChanges(){
 				}
 				if(question_format=='Fill in the Blank'){
 					thisQ_insert.num_answers=1;
-					thisQ_insert.ans0='opt0';
+					thisQ_insert.answer0='opt0';
 					let this_ans_id = (i+1)+"ans";
 					let this_ans_text=document.getElementById(this_ans_id).value;
 					if(this_ans_text==''){
@@ -146,7 +146,8 @@ function saveChanges(){
 		xmlHttp.onreadystatechange = function (){
 			if(xmlHttp.readyState==4&&xmlHttp.status==200){
 				console.log(xmlHttp.responseText);
-				//submitChanges();
+				loadedTest=false;
+				retrieveTest();
 			}
 		}
 		xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/saveData.pl',true);
