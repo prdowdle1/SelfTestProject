@@ -79,7 +79,6 @@ function addAnswer(num){//FOR DROPDOWNS find id=dropGridx where x is the number 
     let numAns = ansPerQ[num-1].length;
     ansPerQ[num-1].push("opt0");
     parentDiv.appendChild(createAnswerSlot(numInTest,numAns,optionsPerQ[num-1],"new"));//-1 optionsPerQ since Qnum starts at 1
-    console.log(ansPerQ, optionsPerQ);
 }
 
 //############################################################################################\\
@@ -224,11 +223,9 @@ function createQuestion(){
 //############################################################################################\\
 
 function changeSize(props){
-	console.log(props);
 	let propsArr = props.split(',');
 	let img = document.getElementById(propsArr[0]);
 	let sizeSelection = document.getElementById(propsArr[1]);
-	console.log(sizeSelection.value);
 	if(sizeSelection.value=='large'){
 		img.classList.remove("small-img");
 		img.classList.add("large-img");

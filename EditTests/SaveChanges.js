@@ -102,7 +102,6 @@ function saveChanges(){
 						thisQ_insert.num_answers=new_ans_count;
 
 					}
-					console.log(question_div);
 				}
 				if(question_format=='Fill in the Blank'){
 					thisQ_insert.num_answers=1;
