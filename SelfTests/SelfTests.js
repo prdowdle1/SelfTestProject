@@ -306,8 +306,6 @@ function getAnswers(){
 }
 
 function gradeTest(corrAns,userAns){
-    console.log(corrAns);
-    console.log(userAns);
     the_grade_div.innerHTML="";
     wrong_list_div.innerHTML = "";
     wrong_list = [];
