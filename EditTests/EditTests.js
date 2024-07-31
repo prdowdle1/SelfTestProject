@@ -94,9 +94,6 @@ function getTestNames(){
                 optEl.innerText=testNames[i].test_name;
                 optEl.value=testNames[i].test_name;
                 testSelect.appendChild(optEl);
-                if(testNames[i].test_name=="Linac Level 2"){
-                    optEl.selected=true;
-                }
             }
             submitSelectionDiv.appendChild(testSelect);
             submitSelectionDiv.appendChild(headButtonDiv);
