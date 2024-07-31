@@ -54,6 +54,13 @@ function getTestNames(){
     let submitSelectionDiv = document.createElement("div");
     let testSelect=document.createElement("select");
     testSelect.id="test-select";
+    let optEl = document.createElement("option");
+    optEl.innerText='--select--'
+    optEl.value='--select--';
+    optEl.disabled=true;
+    testSelect.appendChild(optEl);
+    testSelect.selectedIndex=0;
+
     let headButtonDiv = document.createElement("div");
     headButtonDiv.id="headButtons";
     let getTestButton = document.createElement("button");
@@ -111,6 +118,12 @@ function getTestNames(){
 function retrieveTest(){
     document.getElementById('new-question').innerHTML = '';
     document.getElementById("error").innerText='';
+    loadedTestName = document.getElementById("test-select").value;
+    console.log(loadedTestName);
+    if(loadedTestName=='--select--'){
+        document.getElementById("error").innerText='Select a test please...';
+        return;
+    }
 
     if(loadedTest){
         let result = confirm("Loading a test will wipe any progress you haven't submitted.")
@@ -122,7 +135,6 @@ function retrieveTest(){
     deletedIdsCount = 0;
     document.getElementById("edit-test").innerHTML="";
     let resp;
-	loadedTestName = document.getElementById("test-select").value;
     let req = [loadedTestName,"loadTest"];
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function (){
