@@ -24,8 +24,9 @@ h1{
 }
 
 .edit-question-div{
-    padding-bottom: 20px;
-	padding-top: 20px;
+    padding-bottom: 30px;
+	padding-top: 30px;
+    border-bottom: 2px solid var(--edit-q-border);
 }
 
 .test-levels,
@@ -121,7 +122,7 @@ h1{
 .drop-down-grid{
     display: grid;
     grid-template-columns: 10px 200px;
-    grid-template-rows: repeat(auto-fit, 30px);
+    grid-auto-rows: 30px;
     gap: 10px;
     padding-top: 15px;
 }
@@ -180,6 +181,10 @@ h1{
 
 .option-div{
 padding-bottom:4px;
+}
+
+.edit-test{
+    padding-bottom: 80px;
 }
 
 /* .drop-down-select{

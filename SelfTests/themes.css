@@ -11,6 +11,8 @@
     --buttons-shadow: #d3dde7;
     --buttons-hover:#68737e;
     --buttons-hover-text-color:#f8fcff;
+
+    --edit-q-border: #cae2f5;
 }
 
 .light{
@@ -22,4 +24,6 @@
     --buttons-shadow: #7e8a95;
     --buttons-hover:#b6c1cc;
     --buttons-hover-text-color:#1b1d1f;
+
+    --edit-q-border: black;
 }

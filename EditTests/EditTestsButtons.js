@@ -148,7 +148,7 @@ function createQuestion(){
     let question_div = document.createElement("div");
     question_div.id="question"+testLength;
 	question_div.setAttribute("data-type",newQformat);
-	question_div.classList.add("edit-question-dev");
+	question_div.classList.add("edit-question-div");
 	
 	let question_text_div = document.createElement("div");
 	question_text_div.classList.add("edit-question-text-div");

@@ -83,7 +83,13 @@ function generateTest(test){
 
     let testDiv = document.querySelector("#test");
     testDiv.innerHTML="";
+    questionFormats = [];
+    graded_que = [];
+    wrong_list = [];
+    globalArrCount = 0;
     answer_count=0;
+    wrong_list_count = 0;
+    questionCount = 0;
     currentTestDisplayed = test;
     clickedOnTest=true;
 

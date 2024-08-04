@@ -119,7 +119,7 @@ function retrieveTest(){
     document.getElementById('new-question').innerHTML = '';
     document.getElementById("error").innerText='';
     loadedTestName = document.getElementById("test-select").value;
-    console.log(loadedTestName);
+    
     if(loadedTestName=='--select--'){
         document.getElementById("error").innerText='Select a test please...';
         return;
