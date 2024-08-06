@@ -171,15 +171,15 @@ function makeMCel(numInTest,optionCount,origin,corrAns,textValue){
 
     let delButton = document.createElement("input");
     delButton.setAttribute("type","button");
-    delButton.value="Delete Option";
+    delButton.value="-";
     delButton.setAttribute("onclick","delOption('"+numInTest+"opt"+optionCount+",0')");//pass the id of the parent div, 0 cus not a dropdown
 
     option_div.appendChild(delButton);
 
-    let corr_text = document.createElement("span");
-    corr_text.innerText="Correct Answer? ";
+    // let corr_text = document.createElement("span");
+    // corr_text.innerText="Correct Answer? ";
 
-    option_div.appendChild(corr_text);
+    // option_div.appendChild(corr_text);
 
     let corr_ans_radio = document.createElement("input");
     corr_ans_radio.setAttribute("type","radio");
@@ -203,6 +203,7 @@ function makeMCel(numInTest,optionCount,origin,corrAns,textValue){
     opt_text.setAttribute("type","text");
     opt_text.id=numInTest+"opt"+optionCount+"text";
     opt_text.value= textValue;
+    opt_text.classList.add('opt-text-box');
 
     
     option_div.appendChild(opt_text_label);
@@ -227,15 +228,16 @@ function makeDropEl(numInTest,optionCount,textValue){
     optTextBox.setAttribute("type","text");
     optTextBox.id=numInTest+"opt"+optionCount+"text";
     optTextBox.value=textValue;
+    optTextBox.classList.add('opt-text-box')
 
     let delButton = document.createElement("input");
     delButton.setAttribute("type","button");
-    delButton.value="Delete Option";
+    delButton.value="-";
     delButton.setAttribute("onclick","delOption('"+numInTest+"opt"+optionCount+",true')");//pass the id of the parent div, true cus need to udate dropdowns
 
+    optDiv.appendChild(delButton);
     optDiv.appendChild(optSpan);
     optDiv.appendChild(optTextBox);
-    optDiv.appendChild(delButton);
 
     return optDiv;
 }
