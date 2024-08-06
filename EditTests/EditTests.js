@@ -115,13 +115,24 @@ function getTestNames(){
                                 //RETRIEVE TEST\\
 //############################################################################################\\
 
-function retrieveTest(){
+function retrieveTest(fromSaved){
     document.getElementById('new-question').innerHTML = '';
-    document.getElementById("error").innerText='';
+    document.getElementById("feedback").innerText='';
+    if(fromSaved=='saved'){
+        feedback.innerText=("Saved!!");
+        feedback.className='';
+        feedback.classList.add("success-class");
+        setTimeout( ()=> {
+            document.getElementById("feedback").innerText='';
+        },5000);
+    }
     loadedTestName = document.getElementById("test-select").value;
     
     if(loadedTestName=='--select--'){
-        document.getElementById("error").innerText='Select a test please...';
+        let feedback = document.getElementById('feedback');
+        feedback.innerText='Select a test please...';
+        feedback.className='';
+        feedback.classList.add('error-class');
         return;
     }
 
