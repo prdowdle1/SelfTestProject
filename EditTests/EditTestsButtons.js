@@ -55,9 +55,9 @@ function delOption(props){
 function undoDelete(){
     if(deletedIdsCount==0){
         let feedback = document.getElementById("feedback");
-        feedback.innerText="Nothing to undo!";
         feedback.className='';
         feedback.classList.add('error-class');
+        feedback.innerText="Nothing to undo!";
         return;
     }
     document.getElementById("feedback").innerText="";

@@ -2,9 +2,9 @@ function saveChanges(){
 	let feedback=document.getElementById("feedback");
     feedback.innerText='';
     if(!loadedTest){
-        feedback.innerText="Nothing to save!";
         feedback.className='';
         feedback.classList.add('error-class');
+		feedback.innerText="Nothing to save!";
         return;
     }
     let result = confirm("This is not reversible, all changes will be committed and any 'undos' will be forgotten.")
@@ -35,9 +35,9 @@ function saveChanges(){
 				let new_img_count=0;
 				
 				if(question_text==''){
-					feedback.innerHTML="Where is the question text for number " +(i+1)+"?!?!?!";
 					feedback.className='';
 					feedback.classList.add('error-class');
+					feedback.innerHTML="Where is the question text for number " +(i+1)+"?!?!?!";
 					return;
 				}
 				
@@ -61,8 +61,8 @@ function saveChanges(){
 					}
 					if(!found_at_least_one_opt){
 						feedback.className='';
-						feedback.innerHTML = "No options for number "+new_question_count+"!";
 						feedback.classList.add('error-class');
+						feedback.innerHTML = "No options for number "+new_question_count+"!";
 						return;
 					}
 						
@@ -81,9 +81,9 @@ function saveChanges(){
 							}
 						}
 						if(!correct_answer_option){
-							feedback.innerHTML="You are missing an answer selection for number " +(i+1)+"!!!";
 							feedback.className='';
 							feedback.classList.add('error-class');
+							feedback.innerHTML="You are missing an answer selection for number " +(i+1)+"!!!";
 							return;
 						}
 						thisQ_insert.answer0=correct_answer_option;
@@ -105,9 +105,9 @@ function saveChanges(){
 							}
 						}
 						if(new_ans_count==0){
-							feedback.innerHTML = "No answer for number "+new_question_count+"!";
 							feedback.className='';
 							feedback.classList.add('error-class');
+							feedback.innerHTML = "No answer for number "+new_question_count+"!";
 							return;
 						}
 						thisQ_insert.num_answers=new_ans_count;
@@ -120,9 +120,9 @@ function saveChanges(){
 					let this_ans_id = (i+1)+"ans";
 					let this_ans_text=document.getElementById(this_ans_id).value;
 					if(this_ans_text==''){
-						feedback.innerHTML = "No answer for number "+new_question_count+"!";
 						feedback.className='';
 						feedback.classList.add('error-class');
+						feedback.innerHTML = "No answer for number "+new_question_count+"!";
 						return;
 					}
 					thisQ_insert.opt0 = this_ans_text;
@@ -149,9 +149,9 @@ function saveChanges(){
 			}
 		}
 		if(!found_at_least_one_Q){
-			feedback.innerText = "Theres no questions lol?";
 			feedback.className='';
 			feedback.classList.add('error-class');
+			feedback.innerText = "Theres no questions lol?";
 			return;
 		}
 		let req = {test_name:test_name,username:username,data:db_inserts};
@@ -159,13 +159,10 @@ function saveChanges(){
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function (){
 			if(xmlHttp.readyState==4&&xmlHttp.status==200){
-				console.log(xmlHttp.responseText);
 				loadedTest=false;
 				retrieveTest('saved');
 			}else{
-				feedback.innerHTML=xmlHttp.responseText;
-				feedback.className='';
-				feedback.classList.add("error-class");
+				console.log(xmlHttp.responseText);
 			}
 		}
 		xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/saveData.pl',true);

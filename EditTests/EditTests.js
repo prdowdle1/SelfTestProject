@@ -119,9 +119,9 @@ function retrieveTest(fromSaved){
     document.getElementById('new-question').innerHTML = '';
     document.getElementById("feedback").innerText='';
     if(fromSaved=='saved'){
-        feedback.innerText=("Saved!!");
         feedback.className='';
         feedback.classList.add("success-class");
+        feedback.innerText=("Saved!!");
         setTimeout( ()=> {
             document.getElementById("feedback").innerText='';
         },5000);
@@ -130,9 +130,9 @@ function retrieveTest(fromSaved){
     
     if(loadedTestName=='--select--'){
         let feedback = document.getElementById('feedback');
-        feedback.innerText='Select a test please...';
         feedback.className='';
         feedback.classList.add('error-class');
+        feedback.innerText='Select a test please...';
         return;
     }
 
