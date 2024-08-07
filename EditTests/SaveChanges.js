@@ -140,6 +140,7 @@ function saveChanges(){
 							let new_img = 'img'+new_img_count;
 							new_img_count++;
 							thisQ_insert[new_img]=img_src;
+							console.log(img_src);
 						}
 					}
 				}
@@ -155,7 +156,7 @@ function saveChanges(){
 			return;
 		}
 		let req = {test_name:test_name,username:username,data:db_inserts};
-
+return;
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function (){
 			if(xmlHttp.readyState==4&&xmlHttp.status==200){

@@ -289,6 +289,7 @@ function createImageDiv(numInTest,imgNum,image,size){
 
     let thisImg = document.createElement("img");
     thisImg.src=image;
+    console.log(image);
     thisImg.setAttribute("alt",image);
 	thisImg.id=numInTest+"img"+imgNum+"image";
 	let classToAdd = size+"-img";
@@ -301,7 +302,7 @@ function createImageDiv(numInTest,imgNum,image,size){
     thisImgName.setAttribute("type","text");
     thisImgName.classList.add("text-box");
     
-	let imgName = image.replace('https://operations.fnal.gov/members/pdowdle/SelfTests/images/','');
+	let imgName = image.replace('https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/','');
     thisImgName.value=imgName;
     thisImgName.id=numInTest+"img"+imgNum+"name";
 	
