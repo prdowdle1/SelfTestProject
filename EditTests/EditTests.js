@@ -184,6 +184,7 @@ function makeMCel(numInTest,optionCount,origin,corrAns,textValue){
     let corr_ans_radio = document.createElement("input");
     corr_ans_radio.setAttribute("type","radio");
     corr_ans_radio.name=numInTest;
+    corr_ans_radio.classList.add("radio-opt");
 
     if(origin=='onLoad'){
         let thisOpt = "opt"+optionCount;
