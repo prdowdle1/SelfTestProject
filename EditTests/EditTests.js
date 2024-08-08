@@ -276,7 +276,10 @@ function createDropDownSelect(numInTest,answerNum,correctOption,allOptions,optMi
 //############################################################################################\\
 
 function createImageDiv(numInTest,imgNum,image,size){
-
+    if(size!='small'&&size!='large'){//new images wont have a size yet
+        size='small';
+    }
+    
     let delButton = document.createElement("input");
     delButton.setAttribute("type","button");
     delButton.value="Delete Image";
@@ -289,7 +292,6 @@ function createImageDiv(numInTest,imgNum,image,size){
 
     let thisImg = document.createElement("img");
     thisImg.src=image;
-    console.log(image);
     thisImg.setAttribute("alt",image);
 	thisImg.id=numInTest+"img"+imgNum+"image";
 	let classToAdd = size+"-img";
@@ -316,6 +318,7 @@ function createImageDiv(numInTest,imgNum,image,size){
 	largeOpt.innerText="Large";
 	imgSize.appendChild(smallOpt);
 	imgSize.appendChild(largeOpt);
+ 
 	imgSize.value=size;
 	imgSize.setAttribute("onChange","changeSize('"+[thisImg.id,imgSize.id]+"')");
 

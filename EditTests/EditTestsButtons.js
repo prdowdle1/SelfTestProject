@@ -28,7 +28,7 @@ function addImage(numInTest){
         alert("you cannot have more than 10 images, sorry. IF this is inconvenient email someone.")
         return;
     }
-    document.getElementById(imgGridId).appendChild(createImageDiv(numInTest,imgCount,"placeholder.jpg"));
+    document.getElementById(imgGridId).appendChild(createImageDiv(numInTest,imgCount,"https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/placeholder.png"));
 }
 
 //############################################################################################\\

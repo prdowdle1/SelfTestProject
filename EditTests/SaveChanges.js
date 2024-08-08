@@ -132,15 +132,15 @@ function saveChanges(){
 						let this_img = image_div.children[m];
 						let isHidden = this_img.style.display;
 						if(isHidden!='none'){
-							let img_src_id = (i+1)+"img"+m+"image";
-							let img_src = document.getElementById(img_src_id).src;
+							let img_name_id = (i+1)+"img"+m+"name";
+							let img_name = document.getElementById(img_name_id).value;
+							let img_src = 'https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/'+img_name;
 							let img_size_id = (i+1)+"img"+m+"size";
 							let img_size=document.getElementById(img_size_id).value;
 							img_src = img_src+img_size;
 							let new_img = 'img'+new_img_count;
 							new_img_count++;
 							thisQ_insert[new_img]=img_src;
-							console.log(img_src);
 						}
 					}
 				}
@@ -156,14 +156,14 @@ function saveChanges(){
 			return;
 		}
 		let req = {test_name:test_name,username:username,data:db_inserts};
-return;
+
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function (){
 			if(xmlHttp.readyState==4&&xmlHttp.status==200){
 				loadedTest=false;
 				retrieveTest('saved');
 			}else{
-				console.log(xmlHttp.responseText);
+				
 			}
 		}
 		xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/saveData.pl',true);
