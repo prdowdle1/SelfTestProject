@@ -1,5 +1,5 @@
 let testCats = ["Safety","Linac","Booster","MI/RR","External Beams","Controls","Muon"];
-let levels=["Intro","Level 1","Level 2","Level 3","Level 4"];//could add an "All"?
+let levels=["Intro OJT","Level 1","Level 2","Level 3","Level 4"];//could add an "All"?
 let catagoriesHTML;
 let levelsHTML;
 let addedLevels = false;
