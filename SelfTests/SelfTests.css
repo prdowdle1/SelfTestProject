@@ -93,7 +93,7 @@ h1{
     padding-top: 15px;
 }
 
-.small-img{
+/* .small-img{
     width: 450px;
     height:450px;
 }
@@ -101,7 +101,7 @@ h1{
 .large-img{
     width: 650px;
     height: 650px;
-}
+} */
 
 .image-grid{
     display: flex;
