@@ -298,7 +298,7 @@ function getAnswers(){
             }
             answerElement[i]=ansArr;
         }else if(questionFormats[i]=="Fill in the Blank"){
-
+            answerElement[i] = document.getElementById(i+1).value;
         }
         userAnswers[i]= answerElement[i];
     }
@@ -345,7 +345,8 @@ function gradeTest(corrAns,userAns){
         }else if(corrAns[i].format=="Fill in the Blank"){
             let userInp = document.getElementById(corrAns[i].num_in_test).value;
             let LCuInp = userInp.toLowerCase();
-            if(corrAns[i].opt0==LCuInp){
+            let correct = corrAns[i].opt0.toLowerCase();
+            if(correct==LCuInp){
                 graded_que[i]="correct";
             }else{
                 graded_que[i]="wrong";
@@ -365,7 +366,7 @@ function gradeTest(corrAns,userAns){
         }
     }
     let the_grade = (correct_count/questionCount)*100;
-    the_grade_div.innerHTML = "You go a " + the_grade + "% on this test. ";
+    the_grade_div.innerHTML = "You got a " + the_grade + "% on this test. Thats "+correct_count+"/"+questionCount+".";
     document.getElementById("display-wrong").setAttribute("onclick","displayWrong()");
     document.getElementById("test").appendChild(the_grade_div);
 }
