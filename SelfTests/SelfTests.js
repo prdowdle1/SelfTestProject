@@ -178,9 +178,35 @@ function buildQuestion(format,num,question,numAnswers,options,images,imageSizes)
 
     let imageGrid = document.createElement("div");
     imageGrid.classList.add("image-grid");
+    //deal with images
+    
+    for(let i=0;i<images.length;i++){
+        let imgDiv = document.createElement("div");
+        imgDiv.classList.add("image");
+
+        let thisImg = document.createElement("img");
+        thisImg.src=images[i];
+		let imgid = num+"img"+i;
+        thisImg.id=imgid;
+		let sizeClass=imageSizes[i]+"-img";
+		thisImg.classList.add(sizeClass);
+
+        let imgLabel=document.createElement("label");
+        let howManyIs = 'i';
+        for(let j = 0;j<i;j++){
+            howManyIs+='i';
+        }
+        imgLabel.innerText=num+howManyIs+")";
+        imgLabel.setAttribute("for",imgid)
+
+        imgDiv.appendChild(imgLabel);
+        imgDiv.appendChild(thisImg);
+        imageGrid.appendChild(imgDiv);
+    }
 //deal with muliple choice questions
     if(format=="Multiple Choice"){
         question_div.classList.add("multiple-choice");
+        if(images.length>0){question_div.appendChild(imageGrid);}
         for(let i =0;i<options.length;i++){
             let optDiv = document.createElement("div");
 
@@ -196,7 +222,6 @@ function buildQuestion(format,num,question,numAnswers,options,images,imageSizes)
             optText.innerText = alphabet[i] + ") " +options[i];
             optDiv.appendChild(optText);
             question_div.appendChild(optDiv);
-            if(images.length>0){question_div.appendChild(imageGrid);}
         }
     }else if(format=="Drop Down"){//deal with drop downs
         question_div.classList.add("drop-down");
@@ -247,27 +272,7 @@ function buildQuestion(format,num,question,numAnswers,options,images,imageSizes)
         question_div.appendChild(inputDiv);
         if(images.length>0){question_div.appendChild(imageGrid);}
     }
-//deal with images
-    
-    for(let i=0;i<images.length;i++){
-        let imgDiv = document.createElement("div");
-        imgDiv.classList.add("image");
 
-        let thisImg = document.createElement("img");
-        thisImg.src=images[i];
-		let imgid = num+"img"+i;
-        thisImg.id=imgid;
-		let sizeClass=imageSizes[i]+"-img";
-		thisImg.classList.add(sizeClass);
-
-        let imgLabel=document.createElement("label");
-        imgLabel.innerText=num+LCalphabet[i]+")";
-        imgLabel.setAttribute("for",imgid)
-
-        imgDiv.appendChild(imgLabel);
-        imgDiv.appendChild(thisImg);
-        imageGrid.appendChild(imgDiv);
-    }
     return question_div;
 }
 

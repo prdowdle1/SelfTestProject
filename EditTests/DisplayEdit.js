@@ -66,6 +66,16 @@ function displayTest(test){
         addImgButton.value="Add Image";
         addImgButton.setAttribute("onclick","addImage('"+num+"')");
 
+        let imageGrid = document.createElement("div");
+        imageGrid.classList.add("image-grid");
+        imageGrid.id=num+"imgGrid";
+        
+        for(let k=0;k<images.length;k++){
+            imageGrid.appendChild(createImageDiv(num,k,images[k],imageSizes[k]));
+        }
+        
+        question_div.appendChild(imageGrid);
+
         if(test[i].format=="Multiple Choice"){
             let MCoptDiv = document.createElement("div");
             MCoptDiv.id="options"+num;
@@ -86,14 +96,6 @@ function displayTest(test){
             createFillIn(question_div,num,test[i].opt0,addImgButton);
         }
 
-    let imageGrid = document.createElement("div");
-    imageGrid.classList.add("image-grid");
-    imageGrid.id=num+"imgGrid";
-    
-    for(let k=0;k<images.length;k++){
-        imageGrid.appendChild(createImageDiv(num,k,images[k],imageSizes[k]));
-    }
-        question_div.appendChild(imageGrid);
         document.getElementById("edit-test").appendChild(question_div);
     }
 

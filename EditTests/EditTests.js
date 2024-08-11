@@ -328,7 +328,11 @@ function createImageDiv(numInTest,imgNum,image,size){
 	imgInfo.appendChild(imgSize);
 
     let imgLabel=document.createElement("label");
-    imgLabel.innerText=numInTest+LCalphabet[imgNum]+")";
+    let howManyIs = 'i';
+    for(let j = 0;j<imgNum;j++){
+        howManyIs+='i';
+    }
+    imgLabel.innerText=numInTest+howManyIs+")";
 
     imgDiv.appendChild(delButton);
     imgDiv.appendChild(imgLabel);

@@ -105,8 +105,9 @@ h1{
 
 .image-grid{
     display: flex;
-    justify-content: space-around;
+    justify-content: left;
     flex-wrap: wrap;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .drop-down-image-grid{
