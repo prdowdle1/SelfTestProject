@@ -29,8 +29,9 @@ function saveChanges(){
 				let question_format = question_div.getAttribute('data-type');
 				let question_text_div = question_div.getElementsByClassName('edit-question-text-box');
 				let question_text = question_text_div[0].value;
-				let image_div = question_div.lastChild;
+				let image_div = question_div.querySelector('.image-grid');
 				let img_count = image_div.childElementCount;
+				console.log(img_count);
 				let new_opt_count = 0;				
 				let new_img_count=0;
 				
@@ -135,9 +136,6 @@ function saveChanges(){
 							let img_name_id = (i+1)+"img"+m+"name";
 							let img_name = document.getElementById(img_name_id).value;
 							let img_src = 'https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/'+img_name;
-							let img_size_id = (i+1)+"img"+m+"size";
-							let img_size=document.getElementById(img_size_id).value;
-							img_src = img_src+img_size;
 							let new_img = 'img'+new_img_count;
 							new_img_count++;
 							thisQ_insert[new_img]=img_src;

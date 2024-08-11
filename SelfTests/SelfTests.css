@@ -93,15 +93,12 @@ h1{
     padding-top: 15px;
 }
 
-/* .small-img{
-    width: 450px;
-    height:450px;
+ .image img{
+    max-width: 775px;
+    max-height: 775px;
+    width: auto;
+    height: auto;
 }
-
-.large-img{
-    width: 650px;
-    height: 650px;
-} */
 
 .image-grid{
     display: flex;

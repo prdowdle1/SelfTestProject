@@ -222,21 +222,6 @@ function createQuestion(){
     document.getElementById("edit-test").appendChild(question_div);
 
 }
-//############################################################################################\\
-//############################################################################################\\
-
-function changeSize(props){
-	let propsArr = props.split(',');
-	let img = document.getElementById(propsArr[0]);
-	let sizeSelection = document.getElementById(propsArr[1]);
-	if(sizeSelection.value=='large'){
-		img.classList.remove("small-img");
-		img.classList.add("large-img");
-	}else{
-		img.classList.remove("large-img");
-		img.classList.add("small-img");
-	}
-}
 
 //############################################################################################\\
 //############################################################################################\\

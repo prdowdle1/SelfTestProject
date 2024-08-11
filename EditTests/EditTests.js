@@ -78,6 +78,13 @@ function getTestNames(){
     saveChangesButton.classList.add("button");
     saveChangesButton.setAttribute("onclick","saveChanges()");
     saveChangesButton.innerText="Save Changes";
+    
+    
+    let uploadImageButton = document.createElement("button");
+    uploadImageButton.classList.add("button");
+    uploadImageButton.setAttribute("onclick","displayUpload()");
+    uploadImageButton.innerText="Upload Image";
+
 	
 	let scrollDownButton = document.createElement("button");
     scrollDownButton.classList.add("button");
@@ -87,6 +94,7 @@ function getTestNames(){
     headButtonDiv.appendChild(saveChangesButton);
     headButtonDiv.appendChild(undoDelButon);
 	headButtonDiv.appendChild(scrollDownButton);
+    headButtonDiv.appendChild(uploadImageButton);
 
     let resp;
     let req = ["nothing yet","getTestNames"];
@@ -276,10 +284,7 @@ function createDropDownSelect(numInTest,answerNum,correctOption,allOptions,optMi
                                 //CREATE IMAGE DIV\\
 //############################################################################################\\
 
-function createImageDiv(numInTest,imgNum,image,size){
-    if(size!='small'&&size!='large'){//new images wont have a size yet
-        size='small';
-    }
+function createImageDiv(numInTest,imgNum,image){
     
     let delButton = document.createElement("input");
     delButton.setAttribute("type","button");
@@ -295,8 +300,6 @@ function createImageDiv(numInTest,imgNum,image,size){
     thisImg.src=image;
     thisImg.setAttribute("alt",image);
 	thisImg.id=numInTest+"img"+imgNum+"image";
-	let classToAdd = size+"-img";
-	thisImg.classList.add(classToAdd);
 	
 	let imgInfo = document.createElement("div");
 	imgInfo.id=numInTest+"img"+imgNum+"info";
@@ -309,23 +312,7 @@ function createImageDiv(numInTest,imgNum,image,size){
     thisImgName.value=imgName;
     thisImgName.id=numInTest+"img"+imgNum+"name";
 	
-	let imgSize = document.createElement("select");
-	imgSize.id=numInTest+"img"+imgNum+"size";
-	let smallOpt = document.createElement("option");
-	smallOpt.value="small";
-	smallOpt.innerText="Small";
-	let largeOpt = document.createElement("option");
-	largeOpt.value="large";
-	largeOpt.innerText="Large";
-	imgSize.appendChild(smallOpt);
-	imgSize.appendChild(largeOpt);
- 
-	imgSize.value=size;
-	imgSize.setAttribute("onChange","changeSize('"+[thisImg.id,imgSize.id]+"')");
-
-	
 	imgInfo.appendChild(thisImgName);
-	imgInfo.appendChild(imgSize);
 
     let imgLabel=document.createElement("label");
     let howManyIs = 'i';
@@ -376,3 +363,68 @@ function createAnswerSlot(num,k,options,answers){
     answerDiv.appendChild(delButton);
     return answerDiv;
 }
+
+function displayUpload(){
+
+    console.log("this jlasdfjioawejfrio waerjfiao ");
+
+    let dialog = document.createElement("dialog");
+    dialog.classList.add("upload-file-modal");
+
+    dialog.innerText = "lahsdfiojhasdfoiawjefoiajefoiuawefjioawefioefw";
+
+    let uploadForm = document.createElement("form");
+    uploadForm.action="upload.cgi";
+    uploadForm.method="post"; 
+    uploadForm.enctype="multipart/form-data";
+    uploadForm.addEventListener("submit", submitImage);
+
+    let filenameInput = document.createElement("input");
+    filenameInput.type = "text";
+    filenameInput.name = "filename";
+
+    let fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.name = "questionImage";
+
+    let submitButton = document.createElement("button");
+    submitButton.innerText = "Submit";
+    submitButton.classList.add("button");
+
+    uploadForm.appendChild(filenameInput);
+    uploadForm.appendChild(fileInput);
+    uploadForm.appendChild(submitButton);
+
+    dialog.appendChild(uploadForm);
+
+    let closeButton = document.createElement("button");
+    closeButton.innerText = "Close";
+    closeButton.classList.add("button");
+    closeButton.addEventListener("click", () => {
+        dialog.close();
+        dialog.remove();
+    })
+
+    dialog.appendChild(closeButton);
+
+    document.querySelector("body").appendChild(dialog);
+    dialog.showModal();
+
+}
+
+function submitImage(event) {
+    var url = 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/uploadImg.pl';
+    var request = new XMLHttpRequest();
+    request.open('POST', url, true);
+    request.onload = function() { // request successful
+    // we can use server response to our request now
+      console.log(request.responseText);
+    };
+  
+    request.onerror = function() {
+      // request failed
+    };
+  
+    request.send(new FormData(event.target)); // create FormData from form that triggered event
+    event.preventDefault();
+  }

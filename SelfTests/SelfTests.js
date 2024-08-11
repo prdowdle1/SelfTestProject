@@ -63,6 +63,12 @@ function displayLevels(machine){
 
 function generateTest(test){
     if(currentTestDisplayed==test){return;}
+    if(clickedOnTest&&warnings){
+        let result = confirm("If you switch now you will lose any prgress on the current test.");
+        if(result==false){
+            return;
+        }
+    }
 
     for(let i=0;i<levels.length;i++){
         let id =selMachine + " " + levels[i];
@@ -73,13 +79,6 @@ function generateTest(test){
     document.querySelectorAll('button.levelButton').forEach(elem => {//disable buttons to prevent spamming of requests
         elem.disabled = true;
     });
-
-    if(clickedOnTest&&warnings){
-        let result = confirm("If you switch now you will lose any prgress on the current test.");
-        if(result==false){
-            return;
-        }
-    }
 
     let testDiv = document.querySelector("#test");
     testDiv.innerHTML="";
@@ -115,7 +114,6 @@ function returnTest(test,title){
     for(let i = 0;i<test.length;i++){//20 possible answrs
         let options = [];
         let images = [];
-		let imageSizes = [];
         for(let j = 0;j<20;j++){//20 possible options
             let curr = "opt"+j;
             if(test[i][curr]!== null){
@@ -125,8 +123,7 @@ function returnTest(test,title){
         for(let j =0;j<10;j++){//10 possible images
             let curr = "img"+j;
             if(test[i][curr]!==null){
-				images[j]=test[i][curr].slice(0,test[i][curr].length-5);
-				imageSizes[j]=test[i][curr].slice(test[i][curr].length-5,test[i][curr].length);
+				images[j]=test[i][curr];
             }
         }
         questionFormats[globalArrCount] = test[i].format;
@@ -134,7 +131,7 @@ function returnTest(test,title){
         numAnswersArr[globalArrCount]=test[i].num_answers;
         globalArrCount++;
 
-        thisTestDiv.appendChild(buildQuestion(test[i].format,test[i].num_in_test,test[i].question,test[i].num_answers,options,images,imageSizes));
+        thisTestDiv.appendChild(buildQuestion(test[i].format,test[i].num_in_test,test[i].question,test[i].num_answers,options,images));
         thisTestDiv.appendChild(document.createElement("br"));
     }
     let gradeButton = document.createElement("button");
@@ -167,7 +164,7 @@ function returnTest(test,title){
     });
 }
 
-function buildQuestion(format,num,question,numAnswers,options,images,imageSizes){
+function buildQuestion(format,num,question,numAnswers,options,images){
     let question_div = document.createElement("div");
     question_div.classList.add("question-div");
 
@@ -188,8 +185,6 @@ function buildQuestion(format,num,question,numAnswers,options,images,imageSizes)
         thisImg.src=images[i];
 		let imgid = num+"img"+i;
         thisImg.id=imgid;
-		let sizeClass=imageSizes[i]+"-img";
-		thisImg.classList.add(sizeClass);
 
         let imgLabel=document.createElement("label");
         let howManyIs = 'i';

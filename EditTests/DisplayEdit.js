@@ -32,7 +32,6 @@ function displayTest(test){
 
         let options = [];
         let images = [];
-		let imageSizes = [];
         let answers = [];
 
         for(let j = 0;j<20;j++){//20 possible options
@@ -52,8 +51,7 @@ function displayTest(test){
         for(let j =0;j<10;j++){//10 possible images
             let curr = "img"+j;
             if(test[i][curr]!==null){
-                images[j]=test[i][curr].slice(0,test[i][curr].length-5);
-				imageSizes[j]=test[i][curr].slice(test[i][curr].length-5,test[i][curr].length);
+                images[j]=test[i][curr];
             }
         }
 
@@ -71,7 +69,7 @@ function displayTest(test){
         imageGrid.id=num+"imgGrid";
         
         for(let k=0;k<images.length;k++){
-            imageGrid.appendChild(createImageDiv(num,k,images[k],imageSizes[k]));
+            imageGrid.appendChild(createImageDiv(num,k,images[k]));
         }
         
         question_div.appendChild(imageGrid);
