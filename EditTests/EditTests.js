@@ -314,14 +314,18 @@ function createImageDiv(numInTest,imgNum,image){
 	let imgInfo = document.createElement("div");
 	imgInfo.id=numInTest+"img"+imgNum+"info";
 
-    let thisImgName = document.createElement("input");
-    thisImgName.setAttribute("type","text");
-    thisImgName.classList.add("text-box");
+    let thisImgName = document.createElement("select");
+    thisImgName.classList.add("image-select");
+    thisImgName.numInTest = numInTest;
+    thisImgName.imgNum = imgNum;
+    thisImgName.imgDiv = imgDiv;
     
 	let imgName = image.replace('https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/','');
     imgName = imgName.split("?")[0];
-    thisImgName.value=imgName;
     thisImgName.id=numInTest+"img"+imgNum+"name";
+    thisImgName.imgName = imgName;
+
+    populateNames(thisImgName)
 	
 	imgInfo.appendChild(thisImgName);
 
@@ -375,18 +379,83 @@ function createAnswerSlot(num,k,options,answers){
     return answerDiv;
 }
 
+function populateNames(thisImgName){
+    let numInTest = thisImgName.numInTest;
+    let imgNum = thisImgName.imgNum;
+    let imgDiv = thisImgName.imgDiv;
+    let imgName = thisImgName.imgName;
+
+    let getNames = new XMLHttpRequest();
+
+    getNames.open("GET", "https://www-bd.fnal.gov/cgi-mcr/pdowdle/getImageNames.pl");
+    getNames.overrideMimeType("application/json");
+    getNames.onload = () => {
+        let imageNames = JSON.parse(getNames.response).sort();
+        
+        imageNames.forEach((el) => {
+            if(el[0] !== '.'){
+                let option = document.createElement('option');
+                option.value = el;
+                option.innerText = el;
+                thisImgName.appendChild(option);
+            }
+        });
+
+        thisImgName.addEventListener("change", () => {
+
+            let positioner = imgDiv.previousElementSibling;
+            let pos = 'before';
+
+            if(!positioner){
+                positioner = imgDiv.nextElementSibling;
+                pos = "after";
+            }
+
+            if(!positioner){
+                positioner = imgDiv.parentNode;
+                pos = "child";
+            }
+
+            let img_el = document.getElementById((numInTest)+"img"+imgNum+"image");
+            let queryParams = `?width=${img_el.clientWidth}`
+            let img_name = thisImgName.value;
+            let img_src = 'https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/'+ img_name + queryParams;
+
+            imgDiv.remove();
+            let newImg = createImageDiv(numInTest,imgNum, img_src);
+
+            switch(pos){
+                case "before":
+                    positioner.after(newImg);
+                    break;
+                case "after":
+                    positioner.before(newImg);
+                    break;
+                default:
+                    positioner.appendChild(newImg);
+            }
+        })
+
+        thisImgName.value=imgName;
+    }
+    getNames.send();
+}
+
 function displayUpload(){
 
     let dialog = document.createElement("dialog");
     dialog.classList.add("upload-file-modal");
 
-    dialog.innerText = "lahsdfiojhasdfoiawjefoiajefoiuawefjioawefioefw";
+    dialog.innerText = "Upload Image";
 
     let uploadForm = document.createElement("form");
-    uploadForm.action="upload.cgi";
     uploadForm.method="post"; 
     uploadForm.enctype="multipart/form-data";
-    uploadForm.addEventListener("submit", submitImage);
+    uploadForm.addEventListener("submit", (event) => {
+        submitImage(event);
+        dialog.close();
+        dialog.remove();
+    });
 
     let filenameInput = document.createElement("input");
     filenameInput.type = "text";
@@ -425,15 +494,15 @@ function submitImage(event) {
     var url = 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/uploadImg.pl';
     var request = new XMLHttpRequest();
     request.open('POST', url, true);
-    request.onload = function() { // request successful
-    // we can use server response to our request now
-    //   console.log(request.responseText);
-    };
-  
-    request.onerror = function() {
-      // request failed
-    };
   
     request.send(new FormData(event.target)); // create FormData from form that triggered event
     event.preventDefault();
+
+    setTimeout(() => {
+        let dropDowns = document.querySelectorAll(".image-select");
+        dropDowns.forEach((el) => {
+            populateNames(el);
+        });
+    }, 500);
+
   }

@@ -203,6 +203,10 @@ padding-bottom:4px;
     overflow: hidden;
 }
 
+.image-select{
+    align-self: start;
+}
+
 /* .drop-down-select{
     nothing here yet
 } */
