@@ -31,7 +31,7 @@ function saveChanges(){
 				let question_text = question_text_div[0].value;
 				let image_div = question_div.querySelector('.image-grid');
 				let img_count = image_div.childElementCount;
-				console.log(img_count);
+
 				let new_opt_count = 0;				
 				let new_img_count=0;
 				

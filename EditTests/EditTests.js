@@ -377,8 +377,6 @@ function createAnswerSlot(num,k,options,answers){
 
 function displayUpload(){
 
-    console.log("this jlasdfjioawejfrio waerjfiao ");
-
     let dialog = document.createElement("dialog");
     dialog.classList.add("upload-file-modal");
 
@@ -429,7 +427,7 @@ function submitImage(event) {
     request.open('POST', url, true);
     request.onload = function() { // request successful
     // we can use server response to our request now
-      console.log(request.responseText);
+    //   console.log(request.responseText);
     };
   
     request.onerror = function() {
