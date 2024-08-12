@@ -186,6 +186,12 @@ function buildQuestion(format,num,question,numAnswers,options,images){
 		let imgid = num+"img"+i;
         thisImg.id=imgid;
 
+        const urlParams = new URLSearchParams(thisImg.src.split('?')[1]);
+
+        if(urlParams.get('width')){
+            thisImg.style.width = urlParams.get('width') + "px";
+        }
+
         let imgLabel=document.createElement("label");
         let howManyIs = 'i';
         for(let j = 0;j<i;j++){

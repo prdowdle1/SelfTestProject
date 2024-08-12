@@ -296,10 +296,20 @@ function createImageDiv(numInTest,imgNum,image){
     imgDiv.classList.add("image");
     imgDiv.id=numInTest+"img"+imgNum;
 
+    let imageWrapper = document.createElement('div');
+    imageWrapper.classList.add("image-wrapper");
+
     let thisImg = document.createElement("img");
     thisImg.src=image;
     thisImg.setAttribute("alt",image);
 	thisImg.id=numInTest+"img"+imgNum+"image";
+
+    const urlParams = new URLSearchParams(thisImg.src.split('?')[1]);
+    if(urlParams.get('width')){
+        imageWrapper.style.width = urlParams.get('width') + "px";
+    }
+
+    imageWrapper.appendChild(thisImg);
 	
 	let imgInfo = document.createElement("div");
 	imgInfo.id=numInTest+"img"+imgNum+"info";
@@ -309,6 +319,7 @@ function createImageDiv(numInTest,imgNum,image){
     thisImgName.classList.add("text-box");
     
 	let imgName = image.replace('https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/','');
+    imgName = imgName.split("?")[0];
     thisImgName.value=imgName;
     thisImgName.id=numInTest+"img"+imgNum+"name";
 	
@@ -323,7 +334,7 @@ function createImageDiv(numInTest,imgNum,image){
 
     imgDiv.appendChild(delButton);
     imgDiv.appendChild(imgLabel);
-	imgDiv.appendChild(thisImg);
+	imgDiv.appendChild(imageWrapper);
 
     imgDiv.appendChild(imgInfo);
     imgDiv.appendChild(thisImgName);

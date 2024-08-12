@@ -134,8 +134,10 @@ function saveChanges(){
 						let isHidden = this_img.style.display;
 						if(isHidden!='none'){
 							let img_name_id = (i+1)+"img"+m+"name";
+							let img_el = document.getElementById((i+1)+"img"+m+"image");
+							let queryParams = `?width=${img_el.clientWidth}`
 							let img_name = document.getElementById(img_name_id).value;
-							let img_src = 'https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/'+img_name;
+							let img_src = 'https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/'+ img_name + queryParams;
 							let new_img = 'img'+new_img_count;
 							new_img_count++;
 							thisQ_insert[new_img]=img_src;
