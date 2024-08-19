@@ -1,5 +1,7 @@
-let testCats = ["Safety","Linac","Booster","MI/RR","External Beams","Controls","Muon"];
-let levels=["Intro OJT","Level 1","Level 2","Level 3","Level 4"];//could add an "All"?
+let testCats = ["Safety","Linac","Booster","MI/RR","External Beams","Controls","Muon","Intro"];
+let levels=["Level 1","Level 2","Level 3","Level 4"];
+let introLevels = ["Concepts","Locations","Operator","ACNET","Safety"];
+let levelsToUse;
 let catagoriesHTML;
 let levelsHTML;
 let addedLevels = false;
@@ -48,20 +50,27 @@ function displayLevels(machine){
     document.getElementById(machine).style.backgroundColor="green";
 
     levelsHTML.innerHTML = "";
-
-    for(let i=0;i<levels.length;i++){
+    let levelsToUse = levels;
+    if(machine=='Intro'){
+        levelsToUse  =introLevels;
+        machToUse='';
+    }else{
+        machToUse=machine+ " ";
+    }
+    for(let i=0;i<levelsToUse.length;i++){
         let buttonEl = document.createElement("button");
-        buttonEl.id=machine+" "+levels[i];
-        buttonEl.innerText=machine+" "+levels[i];
+        buttonEl.id=machToUse+levelsToUse[i];
+        buttonEl.innerText=machToUse+levelsToUse[i];
         buttonEl.classList.add("levelButton");
         buttonEl.classList.add("button");
-        buttonEl.setAttribute("onclick","generateTest('"+machine+" "+levels[i]+"')");
+        buttonEl.setAttribute("onclick","generateTest('"+machToUse+levelsToUse[i]+"')");
         levelsHTML.appendChild(buttonEl);
     }
     addedLevels=true;
 }
 
 function generateTest(test){
+    console.log(test);
     if(currentTestDisplayed==test){return;}
     if(clickedOnTest&&warnings){
         let result = confirm("If you switch now you will lose any prgress on the current test.");
@@ -69,9 +78,19 @@ function generateTest(test){
             return;
         }
     }
-
-    for(let i=0;i<levels.length;i++){
-        let id =selMachine + " " + levels[i];
+    let machToUse;
+    if(introLevels.includes(test)){
+        levelsToUse = introLevels;
+        selMachine='';
+        machToUse='';
+    }else{
+        levelsToUse=levels;
+        machToUse=selMachine + " ";
+    }
+    console.log(machToUse);
+    for(let i=0;i<levelsToUse.length;i++){
+        let id =machToUse + levelsToUse[i];
+        console.log(id);
         document.getElementById(id).style.backgroundColor="";
     }
     document.getElementById(test).style.backgroundColor="green";
