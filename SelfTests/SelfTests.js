@@ -70,7 +70,6 @@ function displayLevels(machine){
 }
 
 function generateTest(test){
-    console.log(test);
     if(currentTestDisplayed==test){return;}
     if(clickedOnTest&&warnings){
         let result = confirm("If you switch now you will lose any prgress on the current test.");
@@ -87,10 +86,8 @@ function generateTest(test){
         levelsToUse=levels;
         machToUse=selMachine + " ";
     }
-    console.log(machToUse);
     for(let i=0;i<levelsToUse.length;i++){
         let id =machToUse + levelsToUse[i];
-        console.log(id);
         document.getElementById(id).style.backgroundColor="";
     }
     document.getElementById(test).style.backgroundColor="green";
