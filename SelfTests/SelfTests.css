@@ -207,6 +207,17 @@ padding-bottom:4px;
     align-self: start;
 }
 
+/* .wrong::after{
+    color:rgb(246, 65, 65);
+    content: 'X';
+    padding-left:10px;
+    font-size: 30px;
+} */
+
+.wrong{
+    border: solid 2px rgb(246, 65, 65);;
+}
+
 /* .drop-down-select{
     nothing here yet
 } */

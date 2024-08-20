@@ -183,9 +183,11 @@ function returnTest(test,title){
 function buildQuestion(format,num,question,numAnswers,options,images){
     let question_div = document.createElement("div");
     question_div.classList.add("question-div");
+    question_div.id='q'+num;
 
     let qTextDiv = document.createElement("div");
     qTextDiv.classList.add("question-text");
+    qTextDiv.id='q'+num+'text';
     qTextDiv.innerHTML=num+". "+question;
     question_div.appendChild(qTextDiv);
 
@@ -334,6 +336,10 @@ function getAnswers(){
 }
 
 function gradeTest(corrAns,userAns){
+    for(let i =0;i<questionCount;i++){
+        let id = 'q'+ (i+1) + 'text';
+        document.getElementById(id).classList.remove('wrong');
+    }
     the_grade_div.innerHTML="";
     wrong_list_div.innerHTML = "";
     wrong_list = [];
@@ -393,6 +399,8 @@ function displayWrong(){
     txt= " Wrong answers: "
     for(let i =0;i<wrong_list.length;i++){
         txt+=wrong_list[i]+". ";
+        let id = 'q'+wrong_list[i]+'text';
+        document.getElementById(id).classList.add('wrong');
     }
     wrong_list_div.innerText = txt;
     document.getElementById("test").appendChild(wrong_list_div);
