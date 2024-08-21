@@ -1,4 +1,6 @@
 perl/
+images/
+dogs/
 fromchablis.sh
 tochablis.sh
 .DS_STORE
