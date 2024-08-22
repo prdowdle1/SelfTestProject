@@ -384,6 +384,8 @@ function populateNames(thisImgName){
     let imgNum = thisImgName.imgNum;
     let imgDiv = thisImgName.imgDiv;
     let imgName = thisImgName.imgName;
+    
+    thisImgName.innerHTML = '';
 
     let getNames = new XMLHttpRequest();
 

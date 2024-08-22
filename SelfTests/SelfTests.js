@@ -33,6 +33,8 @@ window.addEventListener('load', function () {
 function generatePage(){
     let getNames = new XMLHttpRequest();
     let doggies = [];
+    let prevRNG;
+    let rng;
 
     getNames.open("GET", "https://www-bd.fnal.gov/cgi-mcr/pdowdle/getDogImages.pl");
     getNames.overrideMimeType("application/json");
@@ -43,8 +45,18 @@ function generatePage(){
                 doggies.push(el);
             }
         });
-        let rng = Math.floor(Math.random() * (doggies.length));
+        rng = Math.floor(Math.random() * (doggies.length));
         document.getElementById('cutedog').src='https://www-bd.fnal.gov/ops/pdowdle/SelfTests/dogs/'+doggies[rng];
+        setInterval( ()=> {
+            rng = Math.floor(Math.random() * (doggies.length));
+            if(rng===prevRNG){
+                while(rng===prevRNG){
+                    rng = Math.floor(Math.random() * (doggies.length));
+                }
+            }
+            prevRNG = rng;
+            document.getElementById('cutedog').src='https://www-bd.fnal.gov/ops/pdowdle/SelfTests/dogs/'+doggies[rng];
+        },10000);
     }
     getNames.send();
 
