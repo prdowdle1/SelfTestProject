@@ -88,7 +88,9 @@ function displayLevels(machine){
     }
     for(let i=0;i<levelsToUse.length;i++){
         let buttonEl = document.createElement("button");
-        buttonEl.id=machToUse+levelsToUse[i];
+        if(levelsToUse[i]=='Safety'){//differentiate between safety test and safety category
+            buttonEl.id=machToUse+levelsToUse[i]+'test';
+        }else{buttonEl.id=machToUse+levelsToUse[i];}
         buttonEl.innerText=machToUse+levelsToUse[i];
         buttonEl.classList.add("levelButton");
         buttonEl.classList.add("button");
@@ -119,7 +121,12 @@ function generateTest(test){
         let id =machToUse + levelsToUse[i];
         document.getElementById(id).style.backgroundColor="";
     }
-    document.getElementById(test).style.backgroundColor="green";
+    let thisId = test;
+    if(test=='Safety'){//differentiate between safety test and safety category
+        thisId=test+'test';
+    }
+
+    document.getElementById(thisId).style.backgroundColor="green";
 
     document.querySelectorAll('button.levelButton').forEach(elem => {//disable buttons to prevent spamming of requests
         elem.disabled = true;
