@@ -20,7 +20,9 @@ h1{
 }
 
 .question-div{
-    padding-bottom: 60px;
+    padding-bottom: 30px;
+	padding-top: 30px;
+    border-bottom: 2px solid var(--edit-q-border);
 }
 
 .edit-question-div{
