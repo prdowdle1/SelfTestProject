@@ -114,6 +114,28 @@ function saveChanges(){
 						thisQ_insert.num_answers=new_ans_count;
 
 					}
+					else if(question_format=='Multiple Select'){
+						let num_answers=0;
+						let options_buttons=document.getElementsByName(i+1);
+						for(k=0;k<options_buttons.length;k++){//get selected answer
+							let tmp_id = (i+1)+'opt'+k;
+							let vis_radio_div = document.getElementById(tmp_id).style.display;
+							if(vis_radio_div!='none'){
+								let this_ans_id = (i+1)+"check"+k;
+								let this_ans_opt=document.getElementById(this_ans_id).checked;
+								let this_ans = "answer"+num_answers;
+								thisQ_insert[this_ans]=this_ans_opt;
+								num_answers++;
+							}
+						}
+						if(num_answers==0){
+							feedback.className='';
+							feedback.classList.add('error-class');
+							feedback.innerHTML="You are missing an answer selection for number " +(i+1)+"!!!";
+							return;
+						}
+						thisQ_insert.num_answers = num_answers;
+					}
 				}
 				if(question_format=='Fill in the Blank'){
 					thisQ_insert.num_answers=1;
@@ -156,7 +178,7 @@ function saveChanges(){
 			return;
 		}
 		let req = {test_name:test_name,username:username,data:db_inserts};
-
+console.log(req);
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function (){
 			if(xmlHttp.readyState==4&&xmlHttp.status==200){

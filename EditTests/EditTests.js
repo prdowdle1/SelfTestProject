@@ -14,7 +14,7 @@ let optionsPerQ = [];
 
 let testLength = 0;
 
-let questionTypes = ["Multiple Choice","Drop Down","Fill in the Blank"];
+let questionTypes = ["Multiple Choice","Drop Down","Fill in the Blank","Multiple Select"];
 
 window.addEventListener('load', function () {
     var xmlHttp = new XMLHttpRequest();

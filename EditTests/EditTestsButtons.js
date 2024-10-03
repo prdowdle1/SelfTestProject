@@ -14,6 +14,8 @@ function addOption(props){// FOR DROPDOWNS passes the number of question to add 
     }else if(propsArr[1]=='Drop Down'){
         parentDiv.appendChild(makeDropEl(propsArr[0],currChildCount,"edit"));
         //if they are adding an option, automatically update the dropdown menus for the answer options
+    }else if(propsArr[1]=='Multiple Select'){
+        parentDiv.appendChild(makeMultSelEl(propsArr[0],currChildCount,'add','noneed','edit'))
     }
 }
 
@@ -216,6 +218,23 @@ function createQuestion(){
         createDropDown(question_div,testLength,options,answers,addOptButton,addImgButton,1);
     }else if(newQformat=="Fill in the Blank"){
         createFillIn(question_div,testLength,"edit",addImgButton);
+    }else if(newQformat=="Multiple Select"){
+        let multSeloptDiv = document.createElement("div");
+        multSeloptDiv.id="options"+testLength;
+        multSeloptDiv.appendChild(makeMultSelEl(testLength,0,'newQadd',"noneed","edit"));
+		multSeloptDiv.classList.add("multSelect-opt-div");
+
+        let options = ['edit'];
+        let answers = ['opt0'];
+        ansPerQ.push(answers);
+        optionsPerQ.push(options);
+
+        question_div.appendChild(multSeloptDiv);
+
+        addOptButton.setAttribute("onclick","addOption('"+[testLength,'Multiple Select']+"')");
+        
+        question_div.appendChild(addOptButton);
+        question_div.appendChild(addImgButton);
     }
 
     question_div.appendChild(imageGrid);

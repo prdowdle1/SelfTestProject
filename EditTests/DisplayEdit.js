@@ -1,4 +1,5 @@
 function displayTest(test){
+    console.log(test);
     testLength=test.length;
     for(let i =0;i<test.length;i++){
         let num = test[i].num_in_test;
@@ -92,6 +93,19 @@ function displayTest(test){
             createDropDown(question_div,num,options,answers,addOptButton,addImgButton,numAnswers);
         }else if(test[i].format=="Fill in the Blank"){
             createFillIn(question_div,num,test[i].opt0,addImgButton);
+        }else if(test[i].format=="Multiple Select"){
+            let multSelDiv = document.createElement("div");
+            multSelDiv.id="options"+num;
+			multSelDiv.classList.add('MC-opt-div');
+            for(let j = 0;j<options.length;j++){
+                multSelDiv.appendChild(makeMultSelEl(num,j,'onLoad',answers,options[j]));
+            }
+            question_div.appendChild(multSelDiv);
+            
+            addOptButton.setAttribute("onclick","addOption('"+[num,'Multiple Select']+"')");
+
+            question_div.appendChild(addOptButton);
+            question_div.appendChild(addImgButton);
         }
 
         document.getElementById("edit-test").appendChild(question_div);
