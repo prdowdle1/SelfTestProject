@@ -19,9 +19,12 @@ let numAnswersArr = [];
 let globalArrCount = 0;
 
 let graded_que = [];
-let the_grade_div = document.createElement("span");
+let the_grade_div = document.createElement("div");
+the_grade_div.id='displayGrade';
 
-let wrong_list_div = document.createElement("span");
+let wrong_list_div = document.createElement("div");
+wrong_list_div.id='displayWrongNums';
+
 let wrong_list = [];
 let wrong_list_count = 0;
 
@@ -197,6 +200,13 @@ function returnTest(test,title){
     gradeButton.id="gradeButton";
     gradeButton.setAttribute("onclick","getAnswers()");
 
+    let hideWrongButton = document.createElement("button");
+    hideWrongButton.classList.add("button");
+    hideWrongButton.innerText = "Clear Grading";
+    hideWrongButton.id="hideWrongButton";
+    hideWrongButton.style.display='none';
+    hideWrongButton.setAttribute("onclick","clearWrong()");
+
     let which_are_wrong = document.createElement("button");
     which_are_wrong.id="display-wrong";
     which_are_wrong.setAttribute("onclick","alert('Grade the test first')");
@@ -205,7 +215,8 @@ function returnTest(test,title){
 
     thisTestDiv.appendChild(gradeButton);
     thisTestDiv.appendChild(which_are_wrong);
-	
+    thisTestDiv.appendChild(hideWrongButton);
+
 	let br0 = document.createElement("br");
 	thisTestDiv.appendChild(br0);
 	
@@ -347,6 +358,7 @@ function buildQuestion(format,num,question,numAnswers,options,images){
             checkDiv.appendChild(optText);
             question_div.appendChild(checkDiv);
         }
+        if(images.length>0){question_div.appendChild(imageGrid);}
     }
 
     return question_div;

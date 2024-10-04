@@ -47,24 +47,7 @@ function getAnswers(){
 }
 
 function gradeTest(corrAns,userAns){
-    for(let i =0;i<questionCount;i++){
-        let id = 'q'+ (i+1) + 'text';
-        document.getElementById(id).classList.remove('wrong');
-    }
-    for(let i =0;i<dropDownWrong.length;i++){
-        for(let j =0;j<dropDownWrong[i].wrong.length;j++){
-            let id = 'q'+dropDownWrong[i].num_in_test+dropDownWrong[i].wrong[j];
-            document.getElementById(id).classList.remove('wrong');
-        }
-    }
-    for(let i =0;i<multSelectWrong.length;i++){
-        for(let j =0;j<multSelectWrong[i].wrong.length;j++){
-            let id = 'q'+multSelectWrong[i].num_in_test+multSelectWrong[i].wrong[j];
-            let childEl = document.getElementById(id);
-            let parent_node = childEl.parentNode;
-            parent_node.classList.remove('wrong');
-        }
-    }
+    clearWrong();
     dropDownWrong=[];
     multSelectWrong=[];
     the_grade_div.innerHTML="";
@@ -167,6 +150,13 @@ function gradeTest(corrAns,userAns){
     the_grade_div.innerHTML = "You got a " + the_grade + "% on this test. Thats "+correct_count+"/"+questionCount+".";
     document.getElementById("display-wrong").setAttribute("onclick","displayWrong()");
     document.getElementById("test").appendChild(the_grade_div);
+
+    let tmpDiv = document.getElementById('displayGrade');
+    tmpDiv.style.display='inline';
+    let nTmpDiv = document.getElementById('displayWrongNums');
+    if(nTmpDiv){
+        nTmpDiv.style.display='inline';
+    }
 }
 
 function displayWrong(){
@@ -195,5 +185,43 @@ function displayWrong(){
         txt+=' None, great going!!';
     }
     wrong_list_div.innerText = txt;
+    let wrongButton = document.getElementById('hideWrongButton');
+    wrongButton.style.display='inline';
     document.getElementById("test").appendChild(wrong_list_div);
+}
+
+function clearWrong(){
+    for(let i =0;i<questionCount;i++){
+        let id = 'q'+ (i+1) + 'text';
+        document.getElementById(id).classList.remove('wrong');
+    }
+    for(let i =0;i<dropDownWrong.length;i++){
+        for(let j =0;j<dropDownWrong[i].wrong.length;j++){
+            let id = 'q'+dropDownWrong[i].num_in_test+dropDownWrong[i].wrong[j];
+            document.getElementById(id).classList.remove('wrong');
+        }
+    }
+    for(let i =0;i<multSelectWrong.length;i++){
+        for(let j =0;j<multSelectWrong[i].wrong.length;j++){
+            let id = 'q'+multSelectWrong[i].num_in_test+multSelectWrong[i].wrong[j];
+            let childEl = document.getElementById(id);
+            let parent_node = childEl.parentNode;
+            parent_node.classList.remove('wrong');
+        }
+    }
+    console.log("clear wrong");
+    let tmpDiv = document.getElementById('displayGrade');
+    console.log(tmpDiv);
+    if(tmpDiv){
+        console.log('tmpdiv');
+        tmpDiv.style.display='none';
+    }    
+
+    let nTmpDiv = document.getElementById('displayWrongNums');
+    if(nTmpDiv){
+        nTmpDiv.style.display='none';
+    }
+
+    let wrongButton = document.getElementById('hideWrongButton');
+    wrongButton.style.display='none';
 }

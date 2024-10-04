@@ -134,7 +134,7 @@ h1{
 }
 
 .question-text{
-    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .edit-question-text-box{
@@ -227,3 +227,7 @@ padding-bottom:4px;
 /* .drop-down-select{
     nothing here yet
 } */
+
+.mult-select-q{
+    margin: 10px;
+}

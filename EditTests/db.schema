@@ -45,3 +45,11 @@ INSERT INTO pdowdle.questions(test_name,num_in_test,question,format,num_answers,
 INSERT INTO pdowdle.questions(test_name,num_in_test,question,format,num_answers,answer0,opt0) VALUES ('Linac Level 2',4,'What is CD short for?','Fill in the Blank',1,'opt0','carbo dioxide');
 
 GRANT ALL ON ALL TABLES IN SCHEMA pdowdle TO opsweb;
+
+\setenv PAGER 'less -S'
+
+SELECT test_name,num_in_test,question,answer0,answer1,answer2,answer3,answer4,answer5,answer6,answer7,opt0,opt1,opt2,opt3,opt4,opt5,opt6,opt7,archived_date FROM pdowdle.archived_questions ORDER BY archived_date;
+
+SELECT test_name,num_in_test,question,answer0,answer1,answer2,answer3,answer4,answer5,answer6,answer7,opt0,opt1,opt2,opt3,opt4,opt5,opt6,opt7 FROM pdowdle.questions ORDER BY test_name;
+
+SELECT pg_size_pretty(pg_total_relation_size('pdowdle.archived_questions'));
