@@ -21,6 +21,14 @@ function getAnswers(){
             answerElement[i]=ansArr;
         }else if(questionFormats[i]=="Fill in the Blank"){
             answerElement[i] = document.getElementById(i+1).value;
+        }else if(questionFormats[i]=="Multiple Select"){
+            let ansArr = [];
+            for(let j =0;j<numAnswersArr[i];j++){
+                let eyePlusOne = i+1;
+                let qId = "q"+eyePlusOne+"ans"+j;
+                ansArr[j] = document.getElementById(qId).checked;
+            }
+            answerElement[i]=ansArr;
         }
         userAnswers[i]= answerElement[i];
     }
@@ -49,12 +57,20 @@ function gradeTest(corrAns,userAns){
             document.getElementById(id).classList.remove('wrong');
         }
     }
+    for(let i =0;i<multSelectWrong.length;i++){
+        for(let j =0;j<multSelectWrong[i].wrong.length;j++){
+            let id = 'q'+multSelectWrong[i].num_in_test+multSelectWrong[i].wrong[j];
+            let childEl = document.getElementById(id);
+            let parent_node = childEl.parentNode;
+            parent_node.classList.remove('wrong');
+        }
+    }
     dropDownWrong=[];
+    multSelectWrong=[];
     the_grade_div.innerHTML="";
     wrong_list_div.innerHTML = "";
     wrong_list = [];
     wrong_list_count = 0;
-    let ptsFromDropDown = 0;
 
     graded_que = [];
     for(let i =0;i<corrAns.length;i++){
@@ -94,6 +110,32 @@ function gradeTest(corrAns,userAns){
             }else{
                 graded_que[i]="wrong";
             }
+        } else if(corrAns[i].format=="Multiple Select"){
+            let mult_ans = [];
+            let obj = {num_in_test:corrAns[i].num_in_test}
+            let wrongArr = [];
+            let foundWrong = false;
+            for(let j =0;j<userAns[i].length;j++){
+                let tmpAns;
+                if(userAns[i][j]==true){//DB spits it out as "1" or "0" not T/F or 1/0
+                    tmpAns="1";
+                }else{tmpAns="0"}
+
+                let id = "answer"+j;
+                let ansNum="ans"+j;
+                if(corrAns[i][id]==tmpAns){
+                    mult_ans[j]="correct";
+                }else{
+                    foundWrong=true;
+                    mult_ans[j]="wrong";
+                    wrongArr.push(ansNum)
+;                }
+            }
+            if(foundWrong){
+                obj['wrong']=wrongArr;
+                multSelectWrong.push(obj)
+            };
+            graded_que[i]=mult_ans;
         }
     }
 
@@ -139,6 +181,14 @@ function displayWrong(){
         for(let j =0;j<dropDownWrong[i].wrong.length;j++){
             let id = 'q'+dropDownWrong[i].num_in_test+dropDownWrong[i].wrong[j];
             document.getElementById(id).classList.add('wrong');
+        }
+    }
+    for(let i = 0; i<multSelectWrong.length;i++){
+        for(let j =0;j<multSelectWrong[i].wrong.length;j++){
+            let id = 'q'+multSelectWrong[i].num_in_test+multSelectWrong[i].wrong[j];
+            let childEl = document.getElementById(id);
+            let parent_node = childEl.parentNode;
+            parent_node.classList.add('wrong');
         }
     }
     if(wrong_list.length==0){

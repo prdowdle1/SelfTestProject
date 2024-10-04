@@ -178,7 +178,7 @@ function saveChanges(){
 			return;
 		}
 		let req = {test_name:test_name,username:username,data:db_inserts};
-console.log(req);
+
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function (){
 			if(xmlHttp.readyState==4&&xmlHttp.status==200){

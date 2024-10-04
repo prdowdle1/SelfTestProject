@@ -26,6 +26,7 @@ let wrong_list = [];
 let wrong_list_count = 0;
 
 let dropDownWrong = [];
+let multSelectWrong = [];
 
 window.addEventListener('load', function () {
     catagoriesHTML = document.getElementById("catagories");
@@ -112,6 +113,7 @@ function generateTest(test){
     }
     let machToUse;
     dropDownWrong=[];
+    multSelectWrong=[];
     if(introLevels.includes(test)){
         levelsToUse = introLevels;
         selMachine='';
@@ -329,6 +331,22 @@ function buildQuestion(format,num,question,numAnswers,options,images){
         inputDiv.classList.add("input-text-field");
         question_div.appendChild(inputDiv);
         if(images.length>0){question_div.appendChild(imageGrid);}
+    }else if(format=="Multiple Select"){
+        question_div.classList.add('multiple-selection');
+        for(let i =0;i<options.length;i++){
+            let checkDiv = document.createElement("div");
+            checkDiv.classList.add('mult-select-q');
+
+            let checkBox = document.createElement("input");
+            checkBox.setAttribute("type","checkbox");
+            checkBox.id= 'q'+num+'ans'+i;
+            let optText = document.createElement("span");
+            optText.innerText = alphabet[i] + ") " +options[i];
+
+            checkDiv.appendChild(checkBox);
+            checkDiv.appendChild(optText);
+            question_div.appendChild(checkDiv);
+        }
     }
 
     return question_div;

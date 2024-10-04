@@ -1,5 +1,4 @@
 function displayTest(test){
-    console.log(test);
     testLength=test.length;
     for(let i =0;i<test.length;i++){
         let num = test[i].num_in_test;

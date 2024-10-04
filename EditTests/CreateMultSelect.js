@@ -1,6 +1,4 @@
 function makeMultSelEl(numInTest,optionCount,origin,corrAns,textValue){
-    console.log(corrAns);
-    console.log(optionCount);
     let option_div = document.createElement("div");
     option_div.id=numInTest+"opt"+optionCount;
 	option_div.classList.add("option-div");
