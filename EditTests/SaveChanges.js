@@ -23,6 +23,7 @@ function saveChanges(){
 			let question_div=edit_test_div.children[i];
 			let hidden = question_div.style.display;
 			let found_at_least_one_opt = false;
+			let question_number = +question_div.id.split("question")[1];
 
 			if(hidden!='none'){
 				found_at_least_one_Q=true;
@@ -44,7 +45,7 @@ function saveChanges(){
 				
 				let thisQ_insert = {test_name: test_name, num_in_test: new_question_count, question: question_text, format: question_format};
 				if(question_format!="Fill in the Blank"){//fill in has no options div
-					let options_div_id = 'options'+(i+1);//plus one cus test nums start at 1
+					let options_div_id = 'options'+(question_number);//plus one cus test nums start at 1
 					let options_div = document.getElementById(options_div_id);
 					let num_options = options_div.childElementCount;
 
@@ -53,7 +54,7 @@ function saveChanges(){
 						let isHidden = this_option.style.display;
 						if(isHidden!='none'){
 							found_at_least_one_opt=true;
-							let tmp_id = (i+1)+'opt'+j+'text';
+							let tmp_id = (question_number)+'opt'+j+'text';
 							let opt_text = document.getElementById(tmp_id).value;
 							let this_opt = 'opt'+new_opt_count;
 							new_opt_count++;
@@ -69,11 +70,11 @@ function saveChanges(){
 						
 					if(question_format=='Multiple Choice'){
 						thisQ_insert.num_answers=1;
-						let options_buttons=document.getElementsByName(i+1);
+						let options_buttons=document.getElementsByName(question_number);
 						let correct_answer_option;
 						
 						for(k=0;k<options_buttons.length;k++){//get selected answer
-							let tmp_id = (i+1)+'opt'+k;
+							let tmp_id = (question_number)+'opt'+k;
 							let vis_radio_div = document.getElementById(tmp_id).style.display;
 							if(options_buttons[k].checked){
 								if(vis_radio_div!='none'){
@@ -89,16 +90,16 @@ function saveChanges(){
 						}
 						thisQ_insert.answer0=correct_answer_option;
 					}else if(question_format=='Drop Down'){
-						let answers_grid_id = 'dropGrid' + (i+1);
+						let answers_grid_id = 'dropGrid' + question_number;
 						let answers_grid = document.getElementById(answers_grid_id);
 						let num_answers = answers_grid.childElementCount;
 						let new_ans_count = 0;
 
 						for(let k = 0;k<num_answers;k++){
-							let ans_div_id = (i+1)+"ans"+k+"div";
+							let ans_div_id = (question_number)+"ans"+k+"div";
 							let ans_display = document.getElementById(ans_div_id).style.display;
 							if(ans_display!="none"){
-								let this_ans_id = (i+1)+"ans"+k;
+								let this_ans_id = (question_number)+"ans"+k;
 								let this_ans_opt=document.getElementById(this_ans_id).value;
 								let this_ans = "answer"+new_ans_count;
 								thisQ_insert[this_ans]=this_ans_opt;
@@ -116,12 +117,12 @@ function saveChanges(){
 					}
 					else if(question_format=='Multiple Select'){
 						let num_answers=0;
-						let options_buttons=document.getElementsByName(i+1);
+						let options_buttons=document.getElementsByName(question_number);
 						for(k=0;k<options_buttons.length;k++){//get selected answer
-							let tmp_id = (i+1)+'opt'+k;
+							let tmp_id = (question_number)+'opt'+k;
 							let vis_radio_div = document.getElementById(tmp_id).style.display;
 							if(vis_radio_div!='none'){
-								let this_ans_id = (i+1)+"check"+k;
+								let this_ans_id = (question_number)+"check"+k;
 								let this_ans_opt=document.getElementById(this_ans_id).checked;
 								let this_ans = "answer"+num_answers;
 								thisQ_insert[this_ans]=this_ans_opt;
@@ -140,7 +141,7 @@ function saveChanges(){
 				if(question_format=='Fill in the Blank'){
 					thisQ_insert.num_answers=1;
 					thisQ_insert.answer0='opt0';
-					let this_ans_id = (i+1)+"ans";
+					let this_ans_id = (question_number)+"ans";
 					let this_ans_text=document.getElementById(this_ans_id).value;
 					if(this_ans_text==''){
 						feedback.className='';
@@ -155,8 +156,8 @@ function saveChanges(){
 						let this_img = image_div.children[m];
 						let isHidden = this_img.style.display;
 						if(isHidden!='none'){
-							let img_name_id = (i+1)+"img"+m+"name";
-							let img_el = document.getElementById((i+1)+"img"+m+"image");
+							let img_name_id = (question_number)+"img"+m+"name";
+							let img_el = document.getElementById((question_number)+"img"+m+"image");
 							let queryParams = `?width=${img_el.clientWidth}`
 							let img_name = document.getElementById(img_name_id).value;
 							let img_src = 'https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/'+ img_name + queryParams;

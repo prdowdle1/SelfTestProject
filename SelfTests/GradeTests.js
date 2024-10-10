@@ -209,11 +209,8 @@ function clearWrong(){
             parent_node.classList.remove('wrong');
         }
     }
-    console.log("clear wrong");
     let tmpDiv = document.getElementById('displayGrade');
-    console.log(tmpDiv);
     if(tmpDiv){
-        console.log('tmpdiv');
         tmpDiv.style.display='none';
     }    
 

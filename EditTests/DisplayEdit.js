@@ -1,3 +1,80 @@
+let draggedDiv = null;
+let dragDummy = document.createElement("div");
+dragDummy.id = "drag-dummy"
+dragDummy.style.backgroundColor = "grey";
+
+dragDummy.addEventListener("drop", (evt) => evt.preventDefault());
+dragDummy.addEventListener("dragover", (evt) => evt.preventDefault());
+
+let hidDraggedDiv = false;
+
+function startTheDrag(event){
+
+    draggedDiv = event.target;
+    dragDummy.style.width = draggedDiv.clientWidth + "px";
+    dragDummy.style.height = draggedDiv.clientHeight + "px";
+
+    event.stopPropagation()
+}
+
+function onDrag(event){
+    if(event.target === draggedDiv && !hidDraggedDiv){
+        hidDraggedDiv = true;
+        draggedDiv.insertAdjacentElement("afterend", dragDummy);
+        draggedDiv.style.display = "none";
+    }else{
+        return;
+    }
+}
+
+function onDragEnd(event){
+
+    dragDummy.insertAdjacentElement("afterend", draggedDiv);
+    draggedDiv.style.display = "";
+    dragDummy.remove();
+
+    draggedDiv = null;
+    hidDraggedDiv = false;
+    event.stopPropagation();
+
+    // this does the renumbering:
+
+    document.getElementById("edit-test").childNodes.forEach((node, i) => {
+        node.querySelector(".number").innerText = `${i+1}.)`;
+    });
+
+    
+}
+
+function dragOver(event){
+
+    if(!event.target.classList.contains("edit-question-div")){
+        return
+    }
+
+    let clientRect = event.target.getBoundingClientRect();
+    let clientY = clientRect.top;
+
+    if(event.clientY > (clientY + event.target.clientHeight/2)){
+        if(event.target.nextSibling !== dragDummy){
+            event.target.insertAdjacentElement("afterend",dragDummy);
+        }
+    }else{
+        if(event.target.previousSibling !== dragDummy){
+            event.target.insertAdjacentElement("beforebegin",dragDummy);
+        }
+    }
+
+    event.stopPropagation()
+    event.preventDefault();
+}
+
+function onDrop(event){
+    event.preventDefault();
+    event.stopPropagation()
+}
+
+
 function displayTest(test){
     testLength=test.length;
     for(let i =0;i<test.length;i++){
@@ -12,6 +89,7 @@ function displayTest(test){
 		question_text_div.classList.add("edit-question-text-div");
         let qNum = document.createElement("span");
         qNum.innerText=num+".) ";
+        qNum.classList.add("number");
         let qText = document.createElement("input");
         qText.setAttribute("type","text");
         qText.setAttribute("size","100px");
@@ -107,6 +185,12 @@ function displayTest(test){
             question_div.appendChild(addImgButton);
         }
 
+        question_div.draggable = true;
+        question_div.addEventListener("dragstart", startTheDrag);
+        question_div.addEventListener("dragend", onDragEnd);
+        question_div.addEventListener("dragover", dragOver);
+        question_div.addEventListener("drop", onDrop);
+        question_div.addEventListener("drag", onDrag);
         document.getElementById("edit-test").appendChild(question_div);
     }
 
