@@ -128,27 +128,25 @@ function getTestNames(){
                                 //RETRIEVE TEST\\
 //############################################################################################\\
 
-function retrieveTest(fromSaved){
-    document.getElementById('new-question').innerHTML = '';
-    document.getElementById("feedback").innerText='';
-    if(fromSaved=='saved'){
-        feedback.className='';
-        feedback.classList.add("success-class");
-        feedback.innerText=("Saved!!");
-        setTimeout( ()=> {
-            document.getElementById("feedback").innerText='';
-        },5000);
-    }
-
+function retrieveTest(fromSaved,savedTest){
     if(loadedTest){
         let result = confirm("Loading a test will wipe any progress you haven't submitted.")
         if(result==false){
             return;
         }
     }
-
     loadedTestName = document.getElementById("test-select").value;
-    document.getElementById('visible-test').innerHTML = loadedTestName;
+    if(fromSaved=='saved'){
+        feedback.className='';
+        feedback.classList.add("success-class");
+        feedback.innerText=("Saved!!");
+        loadedTestName=savedTest;
+        setTimeout( ()=> {
+            document.getElementById("feedback").innerText='';
+        },5000);
+    }
+    document.getElementById('new-question').innerHTML = '';
+    document.getElementById("feedback").innerText='';
     if(loadedTestName=='--select--'){
         let feedback = document.getElementById('feedback');
         feedback.className='';
@@ -156,6 +154,7 @@ function retrieveTest(fromSaved){
         feedback.innerText='Select a test please...';
         return;
     }
+    document.getElementById('visible-test').innerHTML = loadedTestName;
 
     deletedIds = [];
     deletedIdsCount = 0;

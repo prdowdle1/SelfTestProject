@@ -114,6 +114,10 @@ function updateDropDowns(qNum){
 
     for(let i=0;i<dropDownCount;i++){//save current selections
         let id = qNum+"ans"+i;
+        console.log('Parent-Div:');
+        console.log(parentDiv);
+        console.log("ID:");
+        console.log(id);
         currValue[i]=document.getElementById(id).value;
     }
     
