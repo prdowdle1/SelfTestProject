@@ -61,6 +61,10 @@ function getTestNames(){
     testSelect.appendChild(optEl);
     testSelect.selectedIndex=0;
 
+    let viewing = document.createElement("div");
+    viewing.id='visible-test';
+    viewing.classList.add('visible-test-name')
+
     let headButtonDiv = document.createElement("div");
     headButtonDiv.id="headButtons";
     let getTestButton = document.createElement("button");
@@ -113,6 +117,7 @@ function getTestNames(){
             submitSelectionDiv.appendChild(testSelect);
             submitSelectionDiv.appendChild(headButtonDiv);
             startDiv.appendChild(submitSelectionDiv);
+            startDiv.appendChild(viewing);
         }
     }
     xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/editSelfTest.pl',true);
@@ -134,8 +139,16 @@ function retrieveTest(fromSaved){
             document.getElementById("feedback").innerText='';
         },5000);
     }
+
+    if(loadedTest){
+        let result = confirm("Loading a test will wipe any progress you haven't submitted.")
+        if(result==false){
+            return;
+        }
+    }
+
     loadedTestName = document.getElementById("test-select").value;
-    
+    document.getElementById('visible-test').innerHTML = loadedTestName;
     if(loadedTestName=='--select--'){
         let feedback = document.getElementById('feedback');
         feedback.className='';
@@ -144,12 +157,6 @@ function retrieveTest(fromSaved){
         return;
     }
 
-    if(loadedTest){
-        let result = confirm("Loading a test will wipe any progress you haven't submitted.")
-        if(result==false){
-            return;
-        }
-    }
     deletedIds = [];
     deletedIdsCount = 0;
     document.getElementById("edit-test").innerHTML="";
