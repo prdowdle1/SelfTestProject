@@ -147,6 +147,8 @@ function retrieveTest(fromSaved,savedTest){
     }
     document.getElementById('new-question').innerHTML = '';
     document.getElementById("feedback").innerText='';
+    optionsPerQ = [];
+    ansPerQ= [];
     if(loadedTestName=='--select--'){
         let feedback = document.getElementById('feedback');
         feedback.className='';

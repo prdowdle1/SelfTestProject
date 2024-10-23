@@ -96,11 +96,7 @@ function saveChanges(){
 						let new_ans_count = 0;
 
 						for(let k = 0;k<num_answers;k++){
-							console.log("Question-Div:");
-							console.log(question_div);
 							let ans_div_id = (question_number)+"ans"+k+"div";
-							console.log("ID:");
-							console.log(ans_div_id);
 							let ans_display = document.getElementById(ans_div_id).style.display;
 							if(ans_display!="none"){
 								let this_ans_id = (question_number)+"ans"+k;

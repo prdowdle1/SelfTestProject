@@ -80,10 +80,9 @@ function addAnswer(num){//FOR DROPDOWNS find id=dropGridx where x is the number 
         alert("you cannot have more than 20 answers, sorry. IF this is inconvenient email someone.")
         return;
     }
-    let numInTest = num;
     let numAns = ansPerQ[num-1].length;
     ansPerQ[num-1].push("opt0");
-    parentDiv.appendChild(createAnswerSlot(numInTest,numAns,optionsPerQ[num-1],"new"));//-1 optionsPerQ since Qnum starts at 1
+    parentDiv.appendChild(createAnswerSlot(num,numAns,optionsPerQ[num-1],"new"));//-1 optionsPerQ since Qnum starts at 1
 }
 
 //############################################################################################\\
@@ -114,10 +113,6 @@ function updateDropDowns(qNum){
 
     for(let i=0;i<dropDownCount;i++){//save current selections
         let id = qNum+"ans"+i;
-        console.log('Parent-Div:');
-        console.log(parentDiv);
-        console.log("ID:");
-        console.log(id);
         currValue[i]=document.getElementById(id).value;
     }
     

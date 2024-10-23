@@ -237,3 +237,11 @@ padding-bottom:4px;
     text-align: center;
     font-size: 40px;
 }
+
+.edit-question-div *{
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}

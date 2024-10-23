@@ -10,11 +10,16 @@ let hidDraggedDiv = false;
 
 function startTheDrag(event){
 
+    if(!event.target.classList.contains("edit-question-div")){
+        event.stopPropagation();
+        return;
+    }
+
     draggedDiv = event.target;
     dragDummy.style.width = draggedDiv.clientWidth + "px";
     dragDummy.style.height = draggedDiv.clientHeight + "px";
 
-    event.stopPropagation()
+    event.stopPropagation();
 }
 
 function onDrag(event){
@@ -28,6 +33,10 @@ function onDrag(event){
 }
 
 function onDragEnd(event){
+
+    if(!draggedDiv){
+        return;
+    }
 
     dragDummy.insertAdjacentElement("afterend", draggedDiv);
     draggedDiv.style.display = "";
@@ -48,7 +57,7 @@ function onDragEnd(event){
 
 function dragOver(event){
 
-    if(!event.target.classList.contains("edit-question-div")){
+    if(!event.target.classList.contains("edit-question-div") || !draggedDiv){
         return
     }
 
@@ -70,6 +79,11 @@ function dragOver(event){
 }
 
 function onDrop(event){
+
+    if(!draggedDiv){
+        return;
+    }
+
     event.preventDefault();
     event.stopPropagation()
 }
@@ -191,6 +205,17 @@ function displayTest(test){
         question_div.addEventListener("dragover", dragOver);
         question_div.addEventListener("drop", onDrop);
         question_div.addEventListener("drag", onDrag);
+
+        let inputs = question_div.querySelectorAll("input");
+
+        for(let input of inputs){ // this probably doesnt do anything...
+            input.draggable = true;
+            input.addEventListener("dragstart", (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+            })
+        }
+
         document.getElementById("edit-test").appendChild(question_div);
     }
 
