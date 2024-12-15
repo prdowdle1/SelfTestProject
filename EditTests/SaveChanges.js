@@ -193,3 +193,31 @@ function saveChanges(){
 		xmlHttp.send(JSON.stringify(req));
     }
 }
+
+function saveActive(){
+	let reqNames = [];
+	for(let i =0;i<testNames.length;i++){
+		let id = 'active'+i;
+		let checked = document.getElementById(id).checked;
+		let el = {test_name:testNames[i].test_name,active:checked};
+		reqNames.push(el);
+	}
+	let req = {testNames:reqNames};
+
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function (){
+		if(xmlHttp.readyState==4&&xmlHttp.status==200){
+			testNames=reqNames;
+			feedback.className='';
+			feedback.classList.add("success-class");
+			feedback.innerText=("Saved!!");
+			setTimeout( ()=> {
+				document.getElementById("feedback").innerText='';
+			},5000);
+		}else{
+
+		}
+	}
+	xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/saveActive.pl',true);
+	xmlHttp.send(JSON.stringify(req));
+}

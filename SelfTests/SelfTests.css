@@ -245,3 +245,26 @@ padding-bottom:4px;
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+
+.edit-active-grid{
+    display: grid;
+    grid-gap: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 150px;
+    grid-template-columns: 100px 1fr;
+}
+
+.active-header{
+    font-family: var(--main-font);
+    font-size: 22px;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+.footer{
+    text-align: center;
+    font-size: 28px;
+    font-family: var(--main-font);
+    color: var(--header-title-color);
+}

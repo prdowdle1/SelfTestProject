@@ -8,6 +8,7 @@ let deletedIds = [];
 let deletedIdsCount = 0;
 let loadedTestName;
 let username;
+let testNames;
 
 let ansPerQ = [];
 let optionsPerQ = [];
@@ -71,6 +72,7 @@ function getTestNames(){
     getTestButton.classList.add("button");
     getTestButton.setAttribute("onclick","retrieveTest()");
     getTestButton.innerText="Get Test";
+    getTestButton.id="getTestButton";
     headButtonDiv.appendChild(getTestButton);
 
     let undoDelButon = document.createElement("button");
@@ -82,6 +84,7 @@ function getTestNames(){
     saveChangesButton.classList.add("button");
     saveChangesButton.setAttribute("onclick","saveChanges()");
     saveChangesButton.innerText="Save Changes";
+    saveChangesButton.id="saveChangesButton";
     
     
     let uploadImageButton = document.createElement("button");
@@ -89,6 +92,11 @@ function getTestNames(){
     uploadImageButton.setAttribute("onclick","displayUpload()");
     uploadImageButton.innerText="Upload Image";
 
+    let editActiveButton = document.createElement("button");
+    editActiveButton.classList.add("button");
+    editActiveButton.setAttribute("onclick","editActive()");
+    editActiveButton.innerText="Edit Active Tests";
+    editActiveButton.id="editActiveButton";
 	
 	let scrollDownButton = document.createElement("button");
     scrollDownButton.classList.add("button");
@@ -99,6 +107,7 @@ function getTestNames(){
     headButtonDiv.appendChild(undoDelButon);
 	headButtonDiv.appendChild(scrollDownButton);
     headButtonDiv.appendChild(uploadImageButton);
+    headButtonDiv.appendChild(editActiveButton);
 
     let resp;
     let req = ["nothing yet","getTestNames"];
@@ -106,8 +115,7 @@ function getTestNames(){
     xmlHttp.onreadystatechange = function (){
         if(xmlHttp.readyState==4&&xmlHttp.status==200){
             resp = xmlHttp.responseText;
-            let testNames = JSON.parse(resp);
-			
+            testNames = JSON.parse(resp);
             for(let i=0;i<testNames.length;i++){
                 let optEl = document.createElement("option");
                 optEl.innerText=testNames[i].test_name;
@@ -129,9 +137,11 @@ function getTestNames(){
 //############################################################################################\\
 
 function retrieveTest(fromSaved,savedTest){
+    document.getElementById('editActiveButton').setAttribute("disabled","disabled");
     if(loadedTest){
         let result = confirm("Loading a test will wipe any progress you haven't submitted.")
         if(result==false){
+            document.getElementById('editActiveButton').removeAttribute("disabled");
             return;
         }
     }
@@ -157,7 +167,7 @@ function retrieveTest(fromSaved,savedTest){
         return;
     }
     document.getElementById('visible-test').innerHTML = loadedTestName;
-
+    document.getElementById('saveChangesButton').setAttribute("onclick","saveChanges()");
     deletedIds = [];
     deletedIdsCount = 0;
     document.getElementById("edit-test").innerHTML="";
@@ -170,6 +180,8 @@ function retrieveTest(fromSaved,savedTest){
             let test = JSON.parse(resp);
             loadedTest=true;
             displayTest(test);
+        }else{
+            document.getElementById('editActiveButton').removeAttribute("disabled");
         }
     }
     xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/editSelfTest.pl',true);
@@ -498,6 +510,58 @@ function displayUpload(){
     document.querySelector("body").appendChild(dialog);
     dialog.showModal();
 
+}
+
+function editActive(){
+    document.getElementById("getTestButton").setAttribute("disabled","disabled");
+    if(loadedTest){
+        let result = confirm("Switching to active editing will wipe any progress you haven't submitted.")
+        if(result==false){
+            document.getElementById("getTestButton").removeAttribute("disabled");
+            return;
+        }
+    }
+    deletedIds = [];
+    deletedIdsCount = 0;
+    document.getElementById('new-question').innerHTML = '';
+    document.getElementById("feedback").innerText='';
+    document.getElementById("edit-test").innerHTML="";
+    document.getElementById('visible-test').innerHTML = "Activate/Deactivate Tests!!!";
+
+    let activeGrid = document.createElement('div');
+    activeGrid.classList.add("edit-active-grid");
+
+    let column0Header = document.createElement('div');
+    column0Header.innerHTML = "Active?";
+    column0Header.classList.add("active-header");
+    let column1Header = document.createElement('div');
+    column1Header.innerHTML = "Test Name";
+    column1Header.classList.add("active-header");
+    
+    activeGrid.appendChild(column0Header);
+    activeGrid.appendChild(column1Header);
+
+    for(let i =0;i<testNames.length;i++){
+        let checkDiv = document.createElement("div");
+        let checkActive = document.createElement("input");
+        checkActive.setAttribute("type","checkbox");
+        checkActive.id="active"+i;
+        if(testNames[i].active){
+            checkActive.setAttribute("checked","true");
+        }
+        checkDiv.appendChild(checkActive);
+        let textDiv = document.createElement("div");
+        textDiv.innerText=testNames[i].test_name;
+        activeGrid.appendChild(checkActive);
+        activeGrid.appendChild(textDiv);
+    }
+
+    document.getElementById('edit-test').appendChild(activeGrid);
+
+    document.getElementById('saveChangesButton').setAttribute("onclick","saveActive()");
+
+    document.getElementById("getTestButton").removeAttribute("disabled");
+    return;
 }
 
 function submitImage(event) {
