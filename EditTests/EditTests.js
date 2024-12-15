@@ -164,6 +164,7 @@ function retrieveTest(fromSaved,savedTest){
         feedback.className='';
         feedback.classList.add('error-class');
         feedback.innerText='Select a test please...';
+        document.getElementById('editActiveButton').removeAttribute("disabled");
         return;
     }
     document.getElementById('visible-test').innerHTML = loadedTestName;
@@ -555,7 +556,7 @@ function editActive(){
         activeGrid.appendChild(checkActive);
         activeGrid.appendChild(textDiv);
     }
-
+    loadedTest = true;
     document.getElementById('edit-test').appendChild(activeGrid);
 
     document.getElementById('saveChangesButton').setAttribute("onclick","saveActive()");

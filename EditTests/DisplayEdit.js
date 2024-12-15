@@ -241,6 +241,7 @@ function displayTest(test){
     document.getElementById("new-question").appendChild(newQspan);
     document.getElementById("new-question").appendChild(dropDownEl);
     document.getElementById("new-question").appendChild(newQbutton);
+    
     document.getElementById('editActiveButton').removeAttribute("disabled");
 }
 
