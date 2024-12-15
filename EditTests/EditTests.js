@@ -182,7 +182,7 @@ function retrieveTest(fromSaved,savedTest){
             loadedTest=true;
             displayTest(test);
         }else{
-            document.getElementById('editActiveButton').removeAttribute("disabled");
+
         }
     }
     xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/editSelfTest.pl',true);
@@ -529,6 +529,21 @@ function editActive(){
     document.getElementById("edit-test").innerHTML="";
     document.getElementById('visible-test').innerHTML = "Activate/Deactivate Tests!!!";
 
+    let resp;
+    let req = ["nothing yet","getTestNames"];
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function (){
+        if(xmlHttp.readyState==4&&xmlHttp.status==200){
+            resp = xmlHttp.responseText;
+            let theNames = JSON.parse(resp);
+            displayActive(theNames);
+        }
+    }
+    xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/editSelfTest.pl',true);
+    xmlHttp.send(req);
+}
+
+function displayActive(theNames){
     let activeGrid = document.createElement('div');
     activeGrid.classList.add("edit-active-grid");
 
@@ -542,17 +557,17 @@ function editActive(){
     activeGrid.appendChild(column0Header);
     activeGrid.appendChild(column1Header);
 
-    for(let i =0;i<testNames.length;i++){
+    for(let i =0;i<theNames.length;i++){
         let checkDiv = document.createElement("div");
         let checkActive = document.createElement("input");
         checkActive.setAttribute("type","checkbox");
         checkActive.id="active"+i;
-        if(testNames[i].active){
+        if(theNames[i].active){
             checkActive.setAttribute("checked","true");
         }
         checkDiv.appendChild(checkActive);
         let textDiv = document.createElement("div");
-        textDiv.innerText=testNames[i].test_name;
+        textDiv.innerText=theNames[i].test_name;
         activeGrid.appendChild(checkActive);
         activeGrid.appendChild(textDiv);
     }
@@ -562,7 +577,6 @@ function editActive(){
     document.getElementById('saveChangesButton').setAttribute("onclick","saveActive()");
 
     document.getElementById("getTestButton").removeAttribute("disabled");
-    return;
 }
 
 function submitImage(event) {

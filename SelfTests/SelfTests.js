@@ -31,9 +31,24 @@ let wrong_list_count = 0;
 let dropDownWrong = [];
 let multSelectWrong = [];
 
+let testNames;
+
+let isActive=false;
+
 window.addEventListener('load', function () {
     catagoriesHTML = document.getElementById("catagories");
-     generatePage();
+    let resp;
+    let req = ["nothing yet","getTestNames"];
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function (){
+        if(xmlHttp.readyState==4&&xmlHttp.status==200){
+            resp = xmlHttp.responseText;
+            testNames = JSON.parse(resp);
+            generatePage();
+        }
+    }
+    xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/editSelfTest.pl',true);
+    xmlHttp.send(req);
   });
 
 function generatePage(){
@@ -108,12 +123,23 @@ function displayLevels(machine){
 
 function generateTest(test){
     if(currentTestDisplayed==test){return;}
-    if(clickedOnTest&&warnings){
+    if(clickedOnTest&&warnings&&isActive){
         let result = confirm("If you switch now you will lose any prgress on the current test.");
         if(result==false){
             return;
         }
     }
+    for(let i =0;i<testNames.length;i++){
+        if(testNames[i].test_name==test){
+            if(testNames[i].active){
+                isActive=true;
+            }else{
+                isActive=false;
+            }
+            break;
+        }
+    }
+
     let machToUse;
     dropDownWrong=[];
     multSelectWrong=[];
@@ -127,6 +153,9 @@ function generateTest(test){
     }
     for(let i=0;i<levelsToUse.length;i++){
         let id =machToUse + levelsToUse[i];
+        if(levelsToUse[i]=="Safety"){
+            id="Safetytest";
+        }
         document.getElementById(id).style.backgroundColor="";
     }
     let thisId = test;
@@ -152,17 +181,25 @@ function generateTest(test){
     currentTestDisplayed = test;
     clickedOnTest=true;
 
-    let resp;
-    let req = [test,"getQuestions"];
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function (){
-        if(xmlHttp.readyState==4&&xmlHttp.status==200){
-            resp = xmlHttp.responseText;
-            returnTest(JSON.parse(resp),test);
+    if(isActive){
+        let resp;
+        let req = [test,"getQuestions"];
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function (){
+            if(xmlHttp.readyState==4&&xmlHttp.status==200){
+                resp = xmlHttp.responseText;
+                returnTest(JSON.parse(resp),test);
+            }
         }
+        xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/getSelfTest.pl',true);
+        xmlHttp.send(req);
+    }else{
+        document.querySelectorAll('button.levelButton').forEach(elem => {//re-enable buttons once the test is done being built
+            elem.disabled = false;
+        });
+        document.querySelector("#test-title").innerHTML=test;
+        displayWorkInProgress()
     }
-    xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/getSelfTest.pl',true);
-    xmlHttp.send(req);
 }
 
 function returnTest(test,title){
@@ -362,4 +399,12 @@ function buildQuestion(format,num,question,numAnswers,options,images){
     }
 
     return question_div;
+}
+
+function displayWorkInProgress(){
+    let constrDiv = document.createElement("div");
+    constrDiv.innerHTML="<img class='pic' id='construction' src='https://www-bd.fnal.gov/ops/pdowdle/SelfTests/underconstruction.png'></img>";
+    let tstDiv = document.getElementById('test');
+    tstDiv.appendChild(constrDiv);
+    return;
 }

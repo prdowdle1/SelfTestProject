@@ -39,9 +39,8 @@ function getAnswers(){
         if(xmlHttp.readyState==4&&xmlHttp.status==200){
             resp = xmlHttp.responseText;
             gradeTest(JSON.parse(resp),userAnswers);
-            document.getElementById("gradeButton").removeAttribute("disabled");
         }else{
-            document.getElementById("gradeButton").removeAttribute("disabled");
+
         }
     }
     xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/getSelfTest.pl',true);
@@ -159,6 +158,7 @@ function gradeTest(corrAns,userAns){
     if(nTmpDiv){
         nTmpDiv.style.display='inline';
     }
+    document.getElementById("gradeButton").removeAttribute("disabled");
 }
 
 function displayWrong(){
