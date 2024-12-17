@@ -53,6 +53,9 @@ function toggleDarkMode(){
 
 function getTestNames(){
     let submitSelectionDiv = document.createElement("div");
+    
+    let getTestDiv = document.createElement("div");
+    
     let testSelect=document.createElement("select");
     testSelect.id="test-select";
     let optEl = document.createElement("option");
@@ -66,14 +69,17 @@ function getTestNames(){
     viewing.id='visible-test';
     viewing.classList.add('visible-test-name')
 
-    let headButtonDiv = document.createElement("div");
-    headButtonDiv.id="headButtons";
     let getTestButton = document.createElement("button");
     getTestButton.classList.add("button");
     getTestButton.setAttribute("onclick","retrieveTest()");
     getTestButton.innerText="Get Test";
     getTestButton.id="getTestButton";
-    headButtonDiv.appendChild(getTestButton);
+
+    getTestDiv.appendChild(testSelect);
+    getTestDiv.appendChild(getTestButton);
+
+    let headButtonDiv = document.createElement("div");
+    headButtonDiv.id="headButtons";
 
     let undoDelButon = document.createElement("button");
     undoDelButon.classList.add("button");
@@ -83,7 +89,7 @@ function getTestNames(){
     let saveChangesButton= document.createElement("button");
     saveChangesButton.classList.add("button");
     saveChangesButton.setAttribute("onclick","saveChanges()");
-    saveChangesButton.innerText="Save Changes";
+    saveChangesButton.innerText="Save Questions";
     saveChangesButton.id="saveChangesButton";
     
     
@@ -122,7 +128,7 @@ function getTestNames(){
                 optEl.value=testNames[i].test_name;
                 testSelect.appendChild(optEl);
             }
-            submitSelectionDiv.appendChild(testSelect);
+            submitSelectionDiv.appendChild(getTestDiv);
             submitSelectionDiv.appendChild(headButtonDiv);
             startDiv.appendChild(submitSelectionDiv);
             startDiv.appendChild(viewing);
@@ -168,7 +174,12 @@ function retrieveTest(fromSaved,savedTest){
         return;
     }
     document.getElementById('visible-test').innerHTML = loadedTestName;
-    document.getElementById('saveChangesButton').setAttribute("onclick","saveChanges()");
+
+    let savebutton = document.getElementById('saveChangesButton');
+
+    savebutton.setAttribute("onclick","saveChanges()");
+    savebutton.innerHTML="Save Questions";
+
     deletedIds = [];
     deletedIdsCount = 0;
     document.getElementById("edit-test").innerHTML="";
@@ -574,7 +585,9 @@ function displayActive(theNames){
     loadedTest = true;
     document.getElementById('edit-test').appendChild(activeGrid);
 
-    document.getElementById('saveChangesButton').setAttribute("onclick","saveActive()");
+    let savebutton = document.getElementById('saveChangesButton')
+    savebutton.setAttribute("onclick","saveActive()");
+    savebutton.innerHTML='Save Active List';
 
     document.getElementById("getTestButton").removeAttribute("disabled");
 }
