@@ -160,26 +160,50 @@ function createQuestion(){
     let qNum = document.createElement("span");
     qNum.innerText=testLength+".) ";
 
-    let qText = document.createElement("input");
-    qText.setAttribute("type","text");
-    qText.setAttribute("size","100px");
+    let qText = document.createElement("textarea");
+    // qText.setAttribute("type","text");
+    // qText.setAttribute("size","100px");
     qText.id=testLength+"text";
     qText.value="Edit";
 	qText.classList.add("edit-question-text-box");
+
+    qText.draggable = true;
+    qText.addEventListener("dragstart", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+    })
 
     let delButton = document.createElement("input");
     delButton.setAttribute("type","button");
     delButton.value="Delete Question";
     delButton.setAttribute("onclick","delOption('question"+testLength+",0')");//pass the id of the parent div, 0 cus not a dropdown
 
+    delButton.draggable = true;
+    delButton.addEventListener("dragstart", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+    })
+
     let addOptButton = document.createElement("input");
     addOptButton.setAttribute("type","button");
     addOptButton.value="Add Option";
+
+    addOptButton.draggable = true;
+    addOptButton.addEventListener("dragstart", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+    })
 
     let addImgButton = document.createElement("input");
     addImgButton.setAttribute("type","button");
     addImgButton.value="Add Image";
     addImgButton.setAttribute("onclick","addImage('"+testLength+"')");
+
+    addImgButton.draggable = true;
+    addImgButton.addEventListener("dragstart", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+    })
 
     let imageGrid = document.createElement("div");
     imageGrid.classList.add("image-grid");
@@ -187,7 +211,6 @@ function createQuestion(){
 	
 	question_text_div.appendChild(qNum);
     question_text_div.appendChild(qText);
-    question_text_div.appendChild(delButton);
 	
     question_div.appendChild(question_text_div);
 
@@ -235,7 +258,13 @@ function createQuestion(){
         question_div.appendChild(addOptButton);
         question_div.appendChild(addImgButton);
     }
-
+    question_div.appendChild(delButton);
+    question_div.draggable = true;
+    question_div.addEventListener("dragstart", startTheDrag);
+    question_div.addEventListener("dragend", onDragEnd);
+    question_div.addEventListener("dragover", dragOver);
+    question_div.addEventListener("drop", onDrop);
+    question_div.addEventListener("drag", onDrag);
     question_div.appendChild(imageGrid);
     document.getElementById("edit-test").appendChild(question_div);
 

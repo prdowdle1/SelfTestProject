@@ -240,8 +240,8 @@ function makeMCel(numInTest,optionCount,origin,corrAns,textValue){
     let opt_text_label = document.createElement("span");
     opt_text_label.innerText =  alphabet[optionCount] + ") ";
 
-    let opt_text = document.createElement("input")
-    opt_text.setAttribute("type","text");
+    let opt_text = document.createElement("textarea")
+    // opt_text.setAttribute("type","text");
     opt_text.id=numInTest+"opt"+optionCount+"text";
     opt_text.value= textValue;
     opt_text.classList.add('opt-text-box');
@@ -265,8 +265,8 @@ function makeDropEl(numInTest,optionCount,textValue){
     let optSpan = document.createElement("span");
     optSpan.innerText = "Option "+optionCount+") ";
 
-    let optTextBox = document.createElement("input");
-    optTextBox.setAttribute("type","text");
+    let optTextBox = document.createElement("textarea");
+    // optTextBox.setAttribute("type","text");
     optTextBox.id=numInTest+"opt"+optionCount+"text";
     optTextBox.value=textValue;
     optTextBox.classList.add('opt-text-box')

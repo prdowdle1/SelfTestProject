@@ -1,0 +1,12 @@
+-keep line break
+-check for changes
+-link to wiki pages, justify correct answers, lst correct answers
+-delete image
+-if switching categories, higlighted test goes away
+-log who logs i
+
+LONGER
+-revert to earlier save
+-SSO if not logged in, redirect
+
+update pdowdle.questions set test_name='Linac Level 1', num_in_test=38 WHERE test_name='Linac Intro OJT' and num_in_test=10;

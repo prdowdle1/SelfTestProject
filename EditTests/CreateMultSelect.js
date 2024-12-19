@@ -29,8 +29,8 @@ function makeMultSelEl(numInTest,optionCount,origin,corrAns,textValue){
     let opt_text_label = document.createElement("span");
     opt_text_label.innerText =  alphabet[optionCount] + ") ";
 
-    let opt_text = document.createElement("input")
-    opt_text.setAttribute("type","text");
+    let opt_text = document.createElement("textarea")
+    // opt_text.setAttribute("type","text");
     opt_text.id=numInTest+"opt"+optionCount+"text";
     opt_text.value= textValue;
     opt_text.classList.add('opt-text-box');

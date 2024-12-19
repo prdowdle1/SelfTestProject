@@ -104,9 +104,9 @@ function displayTest(test){
         let qNum = document.createElement("span");
         qNum.innerText=num+".) ";
         qNum.classList.add("number");
-        let qText = document.createElement("input");
-        qText.setAttribute("type","text");
-        qText.setAttribute("size","100px");
+        let qText = document.createElement("textarea");
+        // qText.setAttribute("type","text");
+        // qText.setAttribute("size","100px");
         qText.id=num+"text";
         qText.value=test[i].question;
 		qText.classList.add("edit-question-text-box");
@@ -118,7 +118,6 @@ function displayTest(test){
 
 		question_text_div.appendChild(qNum);
 		question_text_div.appendChild(qText);
-		question_text_div.appendChild(delButton);
 
         question_div.appendChild(question_text_div);
 
@@ -198,7 +197,7 @@ function displayTest(test){
             question_div.appendChild(addOptButton);
             question_div.appendChild(addImgButton);
         }
-
+        question_div.appendChild(delButton);
         question_div.draggable = true;
         question_div.addEventListener("dragstart", startTheDrag);
         question_div.addEventListener("dragend", onDragEnd);
@@ -208,7 +207,7 @@ function displayTest(test){
 
         let inputs = question_div.querySelectorAll("input");
 
-        for(let input of inputs){ // this probably doesnt do anything...
+        for(let input of inputs){
             input.draggable = true;
             input.addEventListener("dragstart", (e) => {
                 e.stopPropagation();
