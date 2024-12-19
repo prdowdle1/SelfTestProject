@@ -3,7 +3,8 @@
 -link to wiki pages, justify correct answers, lst correct answers
 -delete image
 -if switching categories, higlighted test goes away
--log who logs i
+-log who logs in
+-special characters
 
 LONGER
 -revert to earlier save

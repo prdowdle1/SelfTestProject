@@ -72,13 +72,16 @@ function saveChanges(){
 						thisQ_insert.num_answers=1;
 						let options_buttons=document.getElementsByName(question_number);
 						let correct_answer_option;
-						
+						let hiddenCount = 0;
 						for(k=0;k<options_buttons.length;k++){//get selected answer
 							let tmp_id = (question_number)+'opt'+k;
 							let vis_radio_div = document.getElementById(tmp_id).style.display;
+							if(vis_radio_div=='none'){
+								hiddenCount++;
+							}
 							if(options_buttons[k].checked){
 								if(vis_radio_div!='none'){
-									correct_answer_option = "opt"+k;
+									correct_answer_option = "opt"+(k-hiddenCount);
 								}
 							}
 						}
@@ -179,7 +182,7 @@ function saveChanges(){
 			return;
 		}
 		let req = {test_name:test_name,username:username,data:db_inserts};
-
+		
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function (){
 			if(xmlHttp.readyState==4&&xmlHttp.status==200){
