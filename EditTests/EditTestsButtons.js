@@ -42,7 +42,7 @@ function delOption(props){
     let propsArr = props.split(',');
     let id = propsArr[0];
     let dropDown = propsArr[1];
-    document.getElementById("feedback").innerText="";
+    feedback.innerText="";
     let delDiv = document.getElementById(id);
     delDiv.style.display="none";
     deletedIds[deletedIdsCount] = id;
@@ -59,13 +59,12 @@ function delOption(props){
 
 function undoDelete(){
     if(deletedIdsCount==0){
-        let feedback = document.getElementById("feedback");
         feedback.className='';
         feedback.classList.add('error-class');
         feedback.innerText="Nothing to undo!";
         return;
     }
-    document.getElementById("feedback").innerText="";
+    feedback.innerText="";
     let undoDiv = document.getElementById(deletedIds[deletedIds.length-1]);
     undoDiv.removeAttribute("style");
     deletedIds.pop();

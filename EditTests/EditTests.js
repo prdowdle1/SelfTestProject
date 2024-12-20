@@ -15,11 +15,14 @@ let madeActiveChange=false;
 let ansPerQ = [];
 let optionsPerQ = [];
 
+let feedback;
+
 let testLength = 0;
 
 let questionTypes = ["Multiple Choice","Drop Down","Fill in the Blank","Multiple Select"];
 
 window.addEventListener('load', function () {
+    feedback=document.getElementById("feedback");
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function (){
         if(xmlHttp.readyState==4&&xmlHttp.status==200){
@@ -160,13 +163,11 @@ function retrieveTest(fromSaved,savedTest){
         feedback.innerText=("Saved!!");
         loadedTestName=savedTest;
         setTimeout( ()=> {
-            document.getElementById("feedback").innerText='';
+            feedback.innerText='';
         },5000);
-    }
+    }else{feedback.innerText='';}
     document.getElementById('new-question').innerHTML = '';
-    document.getElementById("feedback").innerText='';
     if(loadedTestName=='--select--'){
-        let feedback = document.getElementById('feedback');
         feedback.className='';
         feedback.classList.add('error-class');
         feedback.innerText='Select a test please...';
@@ -550,7 +551,7 @@ function editActive(){
     deletedIds = [];
     deletedIdsCount = 0;
     document.getElementById('new-question').innerHTML = '';
-    document.getElementById("feedback").innerText='';
+    feedback.innerText='';
     document.getElementById("edit-test").innerHTML="";
     document.getElementById('visible-test').innerHTML = "Activate/Deactivate Tests!!!";
 
