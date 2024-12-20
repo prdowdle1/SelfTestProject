@@ -13,6 +13,8 @@ let LCalphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p
 let questionCount = 0;
 let selMachine = '';
 
+let currentSelectedTestId;
+
 let questionFormats = [];
 let numOptions = [];
 let numAnswersArr = [];
@@ -116,6 +118,9 @@ function displayLevels(machine){
         buttonEl.classList.add("levelButton");
         buttonEl.classList.add("button");
         buttonEl.setAttribute("onclick","generateTest('"+machToUse+levelsToUse[i]+"')");
+        if(buttonEl.id==currentSelectedTestId){
+            buttonEl.style.backgroundColor="green";
+        }
         levelsHTML.appendChild(buttonEl);
     }
     addedLevels=true;
@@ -162,6 +167,7 @@ function generateTest(test){
     if(test=='Safety'){//differentiate between safety test and safety category
         thisId=test+'test';
     }
+    currentSelectedTestId=thisId;
 
     document.getElementById(thisId).style.backgroundColor="green";
 

@@ -1,8 +1,6 @@
 -keep line break
 -link to wiki pages, justify correct answers, lst correct answers
 -delete image
--if switching categories, higlighted test goes away
--log who logs in
 -special characters
 -last updated?
 -feedback broken on save?
