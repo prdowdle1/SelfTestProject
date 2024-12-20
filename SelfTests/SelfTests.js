@@ -1,4 +1,4 @@
-let testCats = ["Safety","Linac","Booster","MI/RR","External Beams","Controls","Muon","Intro"];
+let testCats = ["Intro","Safety","Linac","Booster","MI/RR","External Beams","Controls","Muon"];
 let levels=["Level 1","Level 2","Level 3","Level 4"];
 let introLevels = ["Concepts","Locations","Operator","ACNET","Safety"];
 let levelsToUse;

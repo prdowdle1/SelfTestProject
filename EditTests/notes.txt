@@ -5,9 +5,18 @@
 -if switching categories, higlighted test goes away
 -log who logs in
 -special characters
+-default file name to image
+-last updated?
+-feedback broken on save?
+-add answer slot if hits 20??
+-grade test on backend?
+-not an official training document, for review purposes only
+-update edit test header
 
 LONGER
 -revert to earlier save
 -SSO if not logged in, redirect
+-show resources/explanation?
+-move question between tests
 
 update pdowdle.questions set test_name='Linac Level 1', num_in_test=38 WHERE test_name='Linac Intro OJT' and num_in_test=10;

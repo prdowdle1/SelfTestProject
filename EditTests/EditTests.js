@@ -489,6 +489,7 @@ function displayUpload(){
         submitImage(event);
         dialog.close();
         dialog.remove();
+        console.log(uploadForm);
     });
 
     let filenameInput = document.createElement("input");
@@ -498,6 +499,11 @@ function displayUpload(){
     let fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.name = "questionImage";
+
+    fileInput.addEventListener("change", (event) => {
+        filenameInput.value = fileInput.value.split("\\").pop();
+    });
+
 
     let submitButton = document.createElement("button");
     submitButton.innerText = "Submit";
