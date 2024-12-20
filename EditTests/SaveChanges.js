@@ -1,7 +1,7 @@
 function saveChanges(){
 	let feedback=document.getElementById("feedback");
     feedback.innerText='';
-    if(!loadedTest){
+    if(!loadedTest||!madeChange){
         feedback.className='';
         feedback.classList.add('error-class');
 		feedback.innerText="Nothing to save!";
@@ -187,6 +187,10 @@ function saveChanges(){
 		xmlHttp.onreadystatechange = function (){
 			if(xmlHttp.readyState==4&&xmlHttp.status==200){
 				loadedTest=false;
+				feedback.innerText=("Saved!!");
+				setTimeout( ()=> {
+					document.getElementById("feedback").innerText='';
+				},5000);
 				retrieveTest('saved',test_name);
 			}else{
 				
@@ -198,6 +202,13 @@ function saveChanges(){
 }
 
 function saveActive(){
+	if(!madeActiveChange){
+		let feedback = document.getElementById("feedback");
+        feedback.className='';
+        feedback.classList.add('error-class');
+        feedback.innerText="Nothing to save!";
+        return;
+	}
 	let reqNames = [];
 	for(let i =0;i<testNames.length;i++){
 		let id = 'active'+i;
@@ -214,6 +225,7 @@ function saveActive(){
 			feedback.className='';
 			feedback.classList.add("success-class");
 			feedback.innerText=("Saved!!");
+			madeActiveChange = false;
 			setTimeout( ()=> {
 				document.getElementById("feedback").innerText='';
 			},5000);

@@ -110,6 +110,8 @@ function displayTest(test){
         qText.id=num+"text";
         qText.value=test[i].question;
 		qText.classList.add("edit-question-text-box");
+        qText.onchange=function(){madeChange=true;};
+
 
         let delButton = document.createElement("input");
         delButton.setAttribute("type","button");

@@ -8,6 +8,7 @@ function addOption(props){// FOR DROPDOWNS passes the number of question to add 
         alert("you cannot have more than 20 options, sorry. IF this is inconvenient email someone.")
         return;
     }
+    madeChange=true;
 
     if(propsArr[1]=='Multiple Choice'){
         parentDiv.appendChild(makeMCel(propsArr[0],currChildCount,'add','noneed','edit'));
@@ -30,6 +31,7 @@ function addImage(numInTest){
         alert("you cannot have more than 10 images, sorry. IF this is inconvenient email someone.")
         return;
     }
+    madeChange=true;
     document.getElementById(imgGridId).appendChild(createImageDiv(numInTest,imgCount,"https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/placeholder"));
 }
 
@@ -45,6 +47,7 @@ function delOption(props){
     delDiv.style.display="none";
     deletedIds[deletedIdsCount] = id;
     deletedIdsCount++;
+    madeChange=true;
     if(dropDown=="true"){//then update the dropdown for the QNUM!!
         let qNum=id[0];
         updateDropDowns(qNum);
@@ -82,6 +85,7 @@ function addAnswer(num){//FOR DROPDOWNS find id=dropGridx where x is the number 
     }
     let numAns = ansPerQ[num-1].length;
     ansPerQ[num-1].push("opt0");
+    madeChange=true;
     parentDiv.appendChild(createAnswerSlot(num,numAns,optionsPerQ[num-1],"new"));//-1 optionsPerQ since Qnum starts at 1
 }
 
@@ -166,6 +170,8 @@ function createQuestion(){
     qText.id=testLength+"text";
     qText.value="Edit";
 	qText.classList.add("edit-question-text-box");
+    qText.onchange=function(){madeChange=true;};
+
 
     qText.draggable = true;
     qText.addEventListener("dragstart", (e) => {
@@ -267,7 +273,7 @@ function createQuestion(){
     question_div.addEventListener("drag", onDrag);
     question_div.appendChild(imageGrid);
     document.getElementById("edit-test").appendChild(question_div);
-
+    madeChange=true;
 }
 
 //############################################################################################\\

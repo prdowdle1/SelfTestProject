@@ -9,6 +9,8 @@ let deletedIdsCount = 0;
 let loadedTestName;
 let username;
 let testNames;
+let madeChange = false;
+let madeActiveChange=false;
 
 let ansPerQ = [];
 let optionsPerQ = [];
@@ -144,7 +146,7 @@ function getTestNames(){
 
 function retrieveTest(fromSaved,savedTest){
     document.getElementById('editActiveButton').setAttribute("disabled","disabled");
-    if(loadedTest){
+    if(loadedTest&&(madeChange||madeActiveChange)){
         let result = confirm("Loading a test will wipe any progress you haven't submitted.")
         if(result==false){
             document.getElementById('editActiveButton').removeAttribute("disabled");
@@ -163,8 +165,6 @@ function retrieveTest(fromSaved,savedTest){
     }
     document.getElementById('new-question').innerHTML = '';
     document.getElementById("feedback").innerText='';
-    optionsPerQ = [];
-    ansPerQ= [];
     if(loadedTestName=='--select--'){
         let feedback = document.getElementById('feedback');
         feedback.className='';
@@ -173,6 +173,10 @@ function retrieveTest(fromSaved,savedTest){
         document.getElementById('editActiveButton').removeAttribute("disabled");
         return;
     }
+    optionsPerQ = [];
+    ansPerQ= [];
+    madeChange=false;
+    madeActiveChange=false;
     document.getElementById('visible-test').innerHTML = loadedTestName;
 
     let savebutton = document.getElementById('saveChangesButton');
@@ -245,6 +249,8 @@ function makeMCel(numInTest,optionCount,origin,corrAns,textValue){
     opt_text.id=numInTest+"opt"+optionCount+"text";
     opt_text.value= textValue;
     opt_text.classList.add('opt-text-box');
+    opt_text.onchange=function(){madeChange=true;};
+
 
     
     option_div.appendChild(opt_text_label);
@@ -270,6 +276,8 @@ function makeDropEl(numInTest,optionCount,textValue){
     optTextBox.id=numInTest+"opt"+optionCount+"text";
     optTextBox.value=textValue;
     optTextBox.classList.add('opt-text-box')
+    optTextBox.onchange=function(){madeChange=true;};
+
 
     let delButton = document.createElement("input");
     delButton.setAttribute("type","button");
@@ -351,6 +359,7 @@ function createImageDiv(numInTest,imgNum,image){
     thisImgName.numInTest = numInTest;
     thisImgName.imgNum = imgNum;
     thisImgName.imgDiv = imgDiv;
+    thisImgName.onchange=function(){madeChange=true;};
     
 	let imgName = image.replace('https://www-bd.fnal.gov/ops/pdowdle/SelfTests/images/','');
     imgName = imgName.split("?")[0];
@@ -489,7 +498,6 @@ function displayUpload(){
         submitImage(event);
         dialog.close();
         dialog.remove();
-        console.log(uploadForm);
     });
 
     let filenameInput = document.createElement("input");
@@ -532,7 +540,7 @@ function displayUpload(){
 
 function editActive(){
     document.getElementById("getTestButton").setAttribute("disabled","disabled");
-    if(loadedTest){
+    if(loadedTest&&madeChange){
         let result = confirm("Switching to active editing will wipe any progress you haven't submitted.")
         if(result==false){
             document.getElementById("getTestButton").removeAttribute("disabled");
@@ -579,6 +587,7 @@ function displayActive(theNames){
         let checkActive = document.createElement("input");
         checkActive.setAttribute("type","checkbox");
         checkActive.id="active"+i;
+        checkActive.onchange=function(){madeActiveChange=true;}
         if(theNames[i].active){
             checkActive.setAttribute("checked","true");
         }

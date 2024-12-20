@@ -34,6 +34,8 @@ function makeMultSelEl(numInTest,optionCount,origin,corrAns,textValue){
     opt_text.id=numInTest+"opt"+optionCount+"text";
     opt_text.value= textValue;
     opt_text.classList.add('opt-text-box');
+    opt_text.onchange=function(){madeChange=true;};
+
 
     
     option_div.appendChild(opt_text_label);
