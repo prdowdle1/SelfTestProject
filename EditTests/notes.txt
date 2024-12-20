@@ -1,17 +1,14 @@
 -keep line break
--check for changes
 -link to wiki pages, justify correct answers, lst correct answers
 -delete image
 -if switching categories, higlighted test goes away
 -log who logs in
 -special characters
--default file name to image
 -last updated?
 -feedback broken on save?
 -add answer slot if hits 20??
 -grade test on backend?
 -not an official training document, for review purposes only
--update edit test header
 
 LONGER
 -revert to earlier save
