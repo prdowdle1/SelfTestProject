@@ -11,6 +11,7 @@ let username;
 let testNames;
 let madeChange = false;
 let madeActiveChange=false;
+let testInfo;
 
 let ansPerQ = [];
 let optionsPerQ = [];
@@ -37,9 +38,7 @@ window.addEventListener('load', function () {
     }
     xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/getUser.pl',true);
     xmlHttp.send();
-    //startDiv = document.getElementById("start-div");
-    //getTestNames();
-  });
+});
 
 function toggleDarkMode(){
     darkMode = !darkMode;
@@ -73,6 +72,10 @@ function getTestNames(){
     let viewing = document.createElement("div");
     viewing.id='visible-test';
     viewing.classList.add('visible-test-name')
+
+    let lastUpdate = document.createElement("span");
+    lastUpdate.id='lastUpdated';
+    lastUpdate.classList.add('last-updated');
 
     let getTestButton = document.createElement("button");
     getTestButton.classList.add("button");
@@ -137,6 +140,7 @@ function getTestNames(){
             submitSelectionDiv.appendChild(headButtonDiv);
             startDiv.appendChild(submitSelectionDiv);
             startDiv.appendChild(viewing);
+            startDiv.appendChild(lastUpdate)
         }
     }
     xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/editSelfTest.pl',true);
@@ -194,8 +198,11 @@ function retrieveTest(fromSaved,savedTest){
     xmlHttp.onreadystatechange = function (){
         if(xmlHttp.readyState==4&&xmlHttp.status==200){
             resp = xmlHttp.responseText;
-            let test = JSON.parse(resp);
+            let info = JSON.parse(resp);
+            let updatedFormat = info[0].last_updated.split('.')[0];
+            let test = info.slice(1,info.length);
             loadedTest=true;
+            document.getElementById('lastUpdated').innerHTML = " (Updated: " +updatedFormat+")";
             displayTest(test);
         }else{
 

@@ -3,7 +3,6 @@
 -delete image
 -special characters
 -last updated?
--feedback broken on save?
 -add answer slot if hits 20??
 -grade test on backend?
 -not an official training document, for review purposes only

@@ -273,3 +273,9 @@ textarea{
     height: 30px;
     width:500px;
 }
+
+.last-updated{
+    color: var(--header-title-color);
+    size: 14px;
+    font-family: var(--main-font);
+}
