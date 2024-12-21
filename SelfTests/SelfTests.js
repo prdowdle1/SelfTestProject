@@ -194,7 +194,11 @@ function generateTest(test){
         xmlHttp.onreadystatechange = function (){
             if(xmlHttp.readyState==4&&xmlHttp.status==200){
                 resp = xmlHttp.responseText;
-                returnTest(JSON.parse(resp),test);
+                let info = JSON.parse(resp);
+                let updatedFormat = info[0].last_updated.split('.')[0];
+                document.getElementById('lastUpdated').innerText = "Updated: "+updatedFormat;
+                let testQs = info.slice(1,info.length);
+                returnTest(testQs,test);
             }
         }
         xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/getSelfTest.pl',true);
