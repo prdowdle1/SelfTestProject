@@ -136,6 +136,7 @@ h1{
 
 .question-text{
     margin-bottom: 20px;
+    white-space: pre-wrap;
 }
 
 .edit-question-text-box{
@@ -199,6 +200,7 @@ padding-bottom:4px;
 
 .opt-text-box{
     width: 500px;
+    white-space: pre-wrap;
 }
 
 .radio-opt{
@@ -226,7 +228,7 @@ padding-bottom:4px;
 }
 
 /* .drop-down-select{
-    nothing here yet
+    white-space: pre-wrap;
 } */
 
 .mult-select-q{
