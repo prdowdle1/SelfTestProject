@@ -301,6 +301,7 @@ function createDropDownSelect(numInTest,answerNum,correctOption,allOptions,optMi
 
     let dropDownEl=document.createElement("select");
     dropDownEl.classList.add("drop-down-select");
+    dropDownEl.onchange=function(){madeChange=true;};
     dropDownEl.id=numInTest+"ans"+answerNum;
     let firstOptNum = "x";//if the first option was delted, mark the second option as the first etc.
     for(let j=0;j<allOptions.length;j++){

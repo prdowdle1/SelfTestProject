@@ -223,6 +223,7 @@ function displayTest(test){
     let dropDownEl=document.createElement("select");
     dropDownEl.classList.add("edit-drop-down-select");
     dropDownEl.id="newQtype";
+    dropDownEl.onchange=function(){madeChange=true;};
 
     let newQspan = document.createElement("span");
     newQspan.innerText = "New Question Type: "

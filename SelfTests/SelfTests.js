@@ -362,6 +362,7 @@ function buildQuestion(format,num,question,numAnswers,options,images){
 
             let dropDownEl=document.createElement("select");
             dropDownEl.classList.add("drop-down-select");
+            dropDownEl.onchange=function(){madeChange=true;};
             dropDownEl.id="q"+num+"ans"+i;//needs to be num_in_test for grading
 
             let nullOpt = document.createElement("option");
