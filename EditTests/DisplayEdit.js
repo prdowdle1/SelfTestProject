@@ -244,6 +244,7 @@ function displayTest(test){
     document.getElementById("new-question").appendChild(newQbutton);
     
     document.getElementById('editActiveButton').removeAttribute("disabled");
+    document.getElementById('editImages').removeAttribute("disabled");
 }
 
 function createFillIn(question_div,num,answer,addImgButton){

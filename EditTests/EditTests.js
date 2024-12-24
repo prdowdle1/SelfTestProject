@@ -101,10 +101,11 @@ function getTestNames(){
     saveChangesButton.id="saveChangesButton";
     
     
-    let uploadImageButton = document.createElement("button");
-    uploadImageButton.classList.add("button");
-    uploadImageButton.setAttribute("onclick","displayUpload()");
-    uploadImageButton.innerText="Upload Image";
+    let imageButton = document.createElement("button");
+    imageButton.classList.add("button");
+    imageButton.setAttribute("onclick","displayImages()");
+    imageButton.innerText="Edit Images";
+    imageButton.id='editImages';
 
     let editActiveButton = document.createElement("button");
     editActiveButton.classList.add("button");
@@ -120,7 +121,7 @@ function getTestNames(){
     headButtonDiv.appendChild(saveChangesButton);
     headButtonDiv.appendChild(undoDelButon);
 	headButtonDiv.appendChild(scrollDownButton);
-    headButtonDiv.appendChild(uploadImageButton);
+    headButtonDiv.appendChild(imageButton);
     headButtonDiv.appendChild(editActiveButton);
 
     let resp;
@@ -152,13 +153,9 @@ function getTestNames(){
 //############################################################################################\\
 
 function retrieveTest(fromSaved,savedTest){
-    document.getElementById('editActiveButton').setAttribute("disabled","disabled");
-    if(loadedTest&&(madeChange||madeActiveChange)){
-        let result = confirm("Loading a test will wipe any progress you haven't submitted.")
-        if(result==false){
-            document.getElementById('editActiveButton').removeAttribute("disabled");
-            return;
-        }
+    let cont = swapBetweenSubPages('retrieve');
+    if(!cont){
+        return;
     }
     loadedTestName = document.getElementById("test-select").value;
     if(fromSaved=='saved'){
@@ -169,19 +166,19 @@ function retrieveTest(fromSaved,savedTest){
         setTimeout( ()=> {
             feedback.innerText='';
         },5000);
-    }else{feedback.innerText='';}
-    document.getElementById('new-question').innerHTML = '';
+    }else{
+        feedback.innerText='';
+    }
+
     if(loadedTestName=='--select--'){
         feedback.className='';
         feedback.classList.add('error-class');
         feedback.innerText='Select a test please...';
         document.getElementById('editActiveButton').removeAttribute("disabled");
+        document.getElementById('editImages').removeAttribute("disabled");
         return;
     }
-    optionsPerQ = [];
-    ansPerQ= [];
-    madeChange=false;
-    madeActiveChange=false;
+
     document.getElementById('visible-test').innerHTML = loadedTestName;
 
     let savebutton = document.getElementById('saveChangesButton');
@@ -189,9 +186,6 @@ function retrieveTest(fromSaved,savedTest){
     savebutton.setAttribute("onclick","saveChanges()");
     savebutton.innerHTML="Save Questions";
 
-    deletedIds = [];
-    deletedIdsCount = 0;
-    document.getElementById("edit-test").innerHTML="";
     let resp;
     let req = [loadedTestName,"loadTest"];
     var xmlHttp = new XMLHttpRequest();
@@ -492,74 +486,12 @@ function populateNames(thisImgName){
     getNames.send();
 }
 
-function displayUpload(){
-
-    let dialog = document.createElement("dialog");
-    dialog.classList.add("upload-file-modal");
-
-    dialog.innerText = "Upload Image";
-
-    let uploadForm = document.createElement("form");
-    uploadForm.method="post"; 
-    uploadForm.enctype="multipart/form-data";
-    uploadForm.addEventListener("submit", (event) => {
-        submitImage(event);
-        dialog.close();
-        dialog.remove();
-    });
-
-    let filenameInput = document.createElement("input");
-    filenameInput.type = "text";
-    filenameInput.name = "filename";
-
-    let fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.name = "questionImage";
-
-    fileInput.addEventListener("change", (event) => {
-        filenameInput.value = fileInput.value.split("\\").pop();
-    });
-
-
-    let submitButton = document.createElement("button");
-    submitButton.innerText = "Submit";
-    submitButton.classList.add("button");
-
-    uploadForm.appendChild(filenameInput);
-    uploadForm.appendChild(fileInput);
-    uploadForm.appendChild(submitButton);
-
-    dialog.appendChild(uploadForm);
-
-    let closeButton = document.createElement("button");
-    closeButton.innerText = "Close";
-    closeButton.classList.add("button");
-    closeButton.addEventListener("click", () => {
-        dialog.close();
-        dialog.remove();
-    })
-
-    dialog.appendChild(closeButton);
-
-    document.querySelector("body").appendChild(dialog);
-    dialog.showModal();
-
-}
-
 function editActive(){
-    document.getElementById("getTestButton").setAttribute("disabled","disabled");
-    if(loadedTest&&madeChange){
-        let result = confirm("Switching to active editing will wipe any progress you haven't submitted.")
-        if(result==false){
-            document.getElementById("getTestButton").removeAttribute("disabled");
-            return;
-        }
+    let cont = swapBetweenSubPages('editActive');
+    if(!cont){
+        return;
     }
-    deletedIds = [];
-    deletedIdsCount = 0;
-    document.getElementById('new-question').innerHTML = '';
     feedback.innerText='';
-    document.getElementById("edit-test").innerHTML="";
     document.getElementById('visible-test').innerHTML = "Activate/Deactivate Tests!!!";
 
     let resp;
@@ -613,21 +545,39 @@ function displayActive(theNames){
     savebutton.innerHTML='Save Active List';
 
     document.getElementById("getTestButton").removeAttribute("disabled");
+    document.getElementById('editImages').removeAttribute("disabled");
 }
 
-function submitImage(event) {
-    var url = 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/uploadImg.pl';
-    var request = new XMLHttpRequest();
-    request.open('POST', url, true);
-  
-    request.send(new FormData(event.target)); // create FormData from form that triggered event
-    event.preventDefault();
+function swapBetweenSubPages(from){
+    if(from=='retrieve'){
+        document.getElementById('editActiveButton').setAttribute("disabled","disabled");
+        document.getElementById('editImages').setAttribute("disabled","disabled");
+    }else if(from=='editActive'){
+        document.getElementById("getTestButton").setAttribute("disabled","disabled");
+        document.getElementById('editImages').setAttribute("disabled","disabled");
+    }else if(from=='editImages'){
+        document.getElementById("getTestButton").setAttribute("disabled","disabled");
+        document.getElementById('editActiveButton').setAttribute("disabled","disabled");
+    }
 
-    setTimeout(() => {
-        let dropDowns = document.querySelectorAll(".image-select");
-        dropDowns.forEach((el) => {
-            populateNames(el);
-        });
-    }, 500);
+    if(loadedTest&&(madeChange||madeActiveChange)){
+        let result = confirm("This will wipe any progress you haven't submitted.")
+        if(result==false){
+            document.getElementById('editActiveButton').removeAttribute("disabled");
+            document.getElementById("getTestButton").removeAttribute("disabled");
+            document.getElementById('editImages').removeAttribute("disabled");
+            return false;
+        }
+    }
+    optionsPerQ = [];
+    ansPerQ= [];
+    madeChange=false;
+    madeActiveChange=false;
+    deletedIds = [];
+    deletedIdsCount = 0;
+    document.getElementById('new-question').innerHTML = '';
+    document.getElementById("edit-test").innerHTML="";
+    document.getElementById('lastUpdated').innerHTML ="";
 
-  }
+    return true;
+}

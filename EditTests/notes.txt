@@ -1,5 +1,5 @@
 -link to wiki pages, justify correct answers, lst correct answers
--delete image
+-remake images, have an "Images" button that will lead to a display of all images, here they can be deleted or new ones added
 -special characters
 -add answer slot if hits 20??
 -grade test on backend?
