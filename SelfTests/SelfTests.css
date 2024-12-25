@@ -257,7 +257,7 @@ padding-bottom:4px;
     grid-template-columns: 100px 1fr;
 }
 
-.active-header{
+.column-header{
     font-family: var(--main-font);
     font-size: 22px;
     text-decoration: underline;
@@ -280,4 +280,21 @@ textarea{
     color: var(--header-title-color);
     size: 14px;
     font-family: var(--main-font);
+}
+
+.edit-images{
+    max-width:600px;
+    max-height:600px;
+    width:auto;
+    height: auto;
+}
+
+.edit-images-grid{
+    display: grid;
+    grid-gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    grid-template-columns: 100px 300px 300px 1fr;
+    border-bottom: 2px solid var(--edit-q-border);
 }

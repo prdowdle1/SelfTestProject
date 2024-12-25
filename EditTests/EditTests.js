@@ -103,7 +103,7 @@ function getTestNames(){
     
     let imageButton = document.createElement("button");
     imageButton.classList.add("button");
-    imageButton.setAttribute("onclick","displayImages()");
+    imageButton.setAttribute("onclick","loadEditImages()");
     imageButton.innerText="Edit Images";
     imageButton.id='editImages';
 
@@ -112,15 +112,9 @@ function getTestNames(){
     editActiveButton.setAttribute("onclick","editActive()");
     editActiveButton.innerText="Edit Active Tests";
     editActiveButton.id="editActiveButton";
-	
-	let scrollDownButton = document.createElement("button");
-    scrollDownButton.classList.add("button");
-    scrollDownButton.setAttribute("onclick","scrollPage('bottom')");
-    scrollDownButton.innerText="Go to the Bottom";
     
     headButtonDiv.appendChild(saveChangesButton);
     headButtonDiv.appendChild(undoDelButon);
-	headButtonDiv.appendChild(scrollDownButton);
     headButtonDiv.appendChild(imageButton);
     headButtonDiv.appendChild(editActiveButton);
 
@@ -153,11 +147,20 @@ function getTestNames(){
 //############################################################################################\\
 
 function retrieveTest(fromSaved,savedTest){
+
+    loadedTestName = document.getElementById("test-select").value;
+
+    if(loadedTestName=='--select--'){
+        feedback.className='';
+        feedback.classList.add('error-class');
+        feedback.innerText='Select a test please...';
+        return;
+    }
+
     let cont = swapBetweenSubPages('retrieve');
     if(!cont){
         return;
     }
-    loadedTestName = document.getElementById("test-select").value;
     if(fromSaved=='saved'){
         feedback.className='';
         feedback.classList.add("success-class");
@@ -168,15 +171,6 @@ function retrieveTest(fromSaved,savedTest){
         },5000);
     }else{
         feedback.innerText='';
-    }
-
-    if(loadedTestName=='--select--'){
-        feedback.className='';
-        feedback.classList.add('error-class');
-        feedback.innerText='Select a test please...';
-        document.getElementById('editActiveButton').removeAttribute("disabled");
-        document.getElementById('editImages').removeAttribute("disabled");
-        return;
     }
 
     document.getElementById('visible-test').innerHTML = loadedTestName;
@@ -515,10 +509,10 @@ function displayActive(theNames){
 
     let column0Header = document.createElement('div');
     column0Header.innerHTML = "Active?";
-    column0Header.classList.add("active-header");
+    column0Header.classList.add("column-header");
     let column1Header = document.createElement('div');
     column1Header.innerHTML = "Test Name";
-    column1Header.classList.add("active-header");
+    column1Header.classList.add("column-header");
     
     activeGrid.appendChild(column0Header);
     activeGrid.appendChild(column1Header);
@@ -561,7 +555,7 @@ function swapBetweenSubPages(from){
         document.getElementById('editActiveButton').setAttribute("disabled","disabled");
     }
 
-    if(loadedTest&&(madeChange||madeActiveChange)){
+    if(loadedTest&&(madeChange||madeActiveChange||madeImageChange)){
         let result = confirm("This will wipe any progress you haven't submitted.")
         if(result==false){
             document.getElementById('editActiveButton').removeAttribute("disabled");
@@ -572,10 +566,14 @@ function swapBetweenSubPages(from){
     }
     optionsPerQ = [];
     ansPerQ= [];
+
     madeChange=false;
     madeActiveChange=false;
+    madeImageChange=false;
+
     deletedIds = [];
     deletedIdsCount = 0;
+
     document.getElementById('new-question').innerHTML = '';
     document.getElementById("edit-test").innerHTML="";
     document.getElementById('lastUpdated').innerHTML ="";
