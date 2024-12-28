@@ -1,6 +1,7 @@
 let imagesToUnlink = [];
 let madeImageChange = false;
 let numImages;
+let displayedImages =[];
 
 function loadEditImages(from){
     let cont = swapBetweenSubPages('editImages');
@@ -11,10 +12,20 @@ function loadEditImages(from){
     if(from=='removed'){
         feedback.className='';
         feedback.classList.add("success-class");
-        feedback.innerText=("This dont do nothing yet!! But it would have rm'd "+imagesToUnlink);
+        feedback.innerText="Archived: ";
+        for(let i =0;i<imagesToUnlink.length;i++){
+            console.log(imagesToUnlink[i]);
+            feedback.innerText+=imagesToUnlink[i];
+            if(i!=imagesToUnlink.length-1){
+                feedback.innerText+=", ";
+            }else{
+                feedback.innerText+=".";
+            }
+        }
         setTimeout( ()=> {
             feedback.innerText='';
         },5000);
+        imagesToUnlink = [];
     }else if(from=='added'){
         feedback.className='';
         feedback.classList.add("success-class");
@@ -31,7 +42,7 @@ function loadEditImages(from){
     savebutton.setAttribute("onclick","archiveImages()");
     savebutton.innerHTML="Rm Selected Images";
 
-    let displayedImages =[];
+    displayedImages =[];
 
     let getNames = new XMLHttpRequest();
 
@@ -209,11 +220,24 @@ function displayUpload(){
 }
 
 function submitImage(event) {
-
-    if(event.srcElement[0].value.includes('?')){
-        alert("No question marks allowed in file names!");
+    let fname = event.srcElement[0].value;
+    if(!fname){
+        alert("No Imge Selected!");
         return;
     }
+    if(fname.includes('?')||fname.includes('/')||fname.includes('\\')){
+        alert("No question marks or slashes allowed in file names!");
+        return;
+    }
+    let found=false;
+    for(let i =0;i<displayedImages.length;i++){
+        if(fname==displayedImages[i]){
+            found=true;
+            alert("File name already exists!");
+            return
+        }
+    }
+    console.log("Got throguht");
 
     var url = 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/uploadImg.pl';
     var request = new XMLHttpRequest();
@@ -240,19 +264,30 @@ function submitImage(event) {
 
 function archiveImages(){
 
-    if(!madeImageChange){
+    for(let i =0;i<numImages;i++){
+        if(document.getElementById("active"+i).checked){
+            imagesToUnlink.push(document.getElementById("img"+i).innerText);
+        }
+    }
+
+    if(imagesToUnlink.length==0){
         feedback.className='';
         feedback.classList.add("error-class");
         feedback.innerText=("No images to remove!");
         return;
     }
 
-    for(let i =0;i<numImages;i++){
-        if(document.getElementById("active"+i).checked){
-            imagesToUnlink.push(document.getElementById("img"+i).innerText);
+    let resp;
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function (){
+        if(xmlHttp.readyState==4&&xmlHttp.status==200){
+            resp = xmlHttp.responseText;
+            madeImageChange = false;
+            loadEditImages('removed');
+        }else{
+
         }
     }
-    madeImageChange = false;
-    loadEditImages('removed');
-
+    xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/archiveImage.pl',true);
+    xmlHttp.send(imagesToUnlink);
 }

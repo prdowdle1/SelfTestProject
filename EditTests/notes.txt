@@ -1,5 +1,5 @@
 -link to wiki pages, justify correct answers, lst correct answers
--remake images, have an "Images" button that will lead to a display of all images, here they can be deleted or new ones added
+-images can be deleted but will overwrite an existing one with the same name in the archive.
 -special characters
 -add answer slot if hits 20??
 -grade test on backend?
@@ -9,5 +9,8 @@ LONGER
 -SSO if not logged in, redirect
 -show resources/explanation?
 -move question between tests
+
+BuG!!
+renaming an img to another img name that exists will pull that img!!!
 
 update pdowdle.questions set test_name='Linac Level 1', num_in_test=38 WHERE test_name='Linac Intro OJT' and num_in_test=10;
