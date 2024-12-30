@@ -93,6 +93,7 @@ function getTestNames(){
     undoDelButon.classList.add("button");
     undoDelButon.setAttribute("onclick","undoDelete()");
     undoDelButon.innerText="Undo Delete";
+    undoDelButon.id="undo-delete-button";
 
     let saveChangesButton= document.createElement("button");
     saveChangesButton.classList.add("button");
@@ -547,12 +548,15 @@ function swapBetweenSubPages(from){
     if(from=='retrieve'){
         document.getElementById('editActiveButton').setAttribute("disabled","disabled");
         document.getElementById('editImages').setAttribute("disabled","disabled");
+        document.getElementById('undo-delete-button').style.display='inline';
     }else if(from=='editActive'){
         document.getElementById("getTestButton").setAttribute("disabled","disabled");
         document.getElementById('editImages').setAttribute("disabled","disabled");
+        document.getElementById('undo-delete-button').style.display='none';
     }else if(from=='editImages'){
         document.getElementById("getTestButton").setAttribute("disabled","disabled");
         document.getElementById('editActiveButton').setAttribute("disabled","disabled");
+        document.getElementById('undo-delete-button').style.display='none';
     }
 
     if(loadedTest&&(madeChange||madeActiveChange||madeImageChange)){

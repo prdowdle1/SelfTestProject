@@ -14,7 +14,6 @@ function loadEditImages(from){
         feedback.classList.add("success-class");
         feedback.innerText="Archived: ";
         for(let i =0;i<imagesToUnlink.length;i++){
-            console.log(imagesToUnlink[i]);
             feedback.innerText+=imagesToUnlink[i];
             if(i!=imagesToUnlink.length-1){
                 feedback.innerText+=", ";
@@ -237,7 +236,6 @@ function submitImage(event) {
             return
         }
     }
-    console.log("Got throguht");
 
     var url = 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/uploadImg.pl';
     var request = new XMLHttpRequest();

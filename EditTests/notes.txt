@@ -1,10 +1,9 @@
--link to wiki pages, justify correct answers, lst correct answers
--images can be deleted but will overwrite an existing one with the same name in the archive.
 -special characters
 -add answer slot if hits 20??
 -grade test on backend?
 
 LONGER
+-link to wiki pages, justify correct answers, lst correct answers
 -revert to earlier save
 -SSO if not logged in, redirect
 -show resources/explanation?
