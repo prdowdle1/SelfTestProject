@@ -282,6 +282,10 @@ textarea{
     font-family: var(--main-font);
 }
 
+.archived-div{
+    padding-top: 15px;
+}
+
 .edit-images{
     max-width:600px;
     max-height:600px;

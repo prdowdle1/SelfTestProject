@@ -89,7 +89,35 @@ function onDrop(event){
 }
 
 
-function displayTest(test){
+function displayTest(testInfo){
+    let test = [];
+
+    let archive_div = document.createElement("div");
+    archive_div.innerText = "Archived Dates: ";
+    archive_div.classList.add('archived-div');
+    let archived_sel =document.createElement("select");
+    archived_sel.id="archive-select";
+    archive_div.appendChild(archived_sel);
+
+    let optEl = document.createElement("option");
+    optEl.innerText='--select archived--'
+    optEl.value='--select--';
+    optEl.disabled=true;
+    archived_sel.appendChild(optEl);
+    archived_sel.selectedIndex=0;
+
+    startDiv.appendChild(archive_div);
+
+    for(let i =0;i<testInfo.length;i++){
+        if(!testInfo[i].archived_date){
+            test.push(testInfo[i])
+        }else{
+            let optEl = document.createElement("option");
+            optEl.innerText=testInfo[i].archived_date.split('.')[0];
+            optEl.value=testInfo[i].archived_date;
+            archived_sel.appendChild(optEl);
+        }
+    }
     testLength=test.length;
     for(let i =0;i<test.length;i++){
         let num = test[i].num_in_test;

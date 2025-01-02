@@ -191,7 +191,7 @@ function retrieveTest(fromSaved,savedTest){
             let updatedFormat = info[0].last_updated.split('.')[0];
             let test = info.slice(1,info.length);
             loadedTest=true;
-            document.getElementById('lastUpdated').innerHTML = " (Updated: " +updatedFormat+")";
+            document.getElementById('lastUpdated').innerHTML = " (Last update: " +updatedFormat+")";
             displayTest(test);
         }else{
 

@@ -9,7 +9,4 @@ LONGER
 -show resources/explanation?
 -move question between tests
 
-BuG!!
-renaming an img to another img name that exists will pull that img!!!
-
 update pdowdle.questions set test_name='Linac Level 1', num_in_test=38 WHERE test_name='Linac Intro OJT' and num_in_test=10;
