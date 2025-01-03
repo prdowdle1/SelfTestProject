@@ -159,8 +159,7 @@ function getTestNames(){
                                 //RETRIEVE TEST\\
 //############################################################################################\\
 
-function retrieveTest(fromSaved,savedTest){
-
+function retrieveTest(from,savedTest,archive_date){
     loadedTestName = document.getElementById("test-select").value;
 
     if(loadedTestName=='--select--'){
@@ -174,7 +173,7 @@ function retrieveTest(fromSaved,savedTest){
     if(!cont){
         return;
     }
-    if(fromSaved=='saved'){
+    if(from=='saved'){
         feedback.className='';
         feedback.classList.add("success-class");
         feedback.innerText=("Saved!!");
@@ -194,7 +193,16 @@ function retrieveTest(fromSaved,savedTest){
     savebutton.innerHTML="Save Questions";
 
     let resp;
-    let req = [loadedTestName,"loadTest"];
+    let req;
+
+    if(from=='archive'){
+        req=[loadedTestName,"archive",archive_date];
+        madeChange=true;
+        document.getElementById('visible-test').innerHTML += "<span class='error-class'> (ARCHIVE FROM " +archive_date.split('.')[0]+")</span>";
+    }else{
+        req = [loadedTestName,"loadTest"];
+    };
+
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function (){
         if(xmlHttp.readyState==4&&xmlHttp.status==200){
@@ -585,7 +593,10 @@ function swapBetweenSubPages(from){
         }
     }
     for(let i =0;i<resizeableImageIds.length;i++){
-        resizeObserver.unobserve(document.getElementById(resizeableImageIds[i]));
+        let found = document.getElementById(resizeableImageIds[i]);
+        if(found){
+            resizeObserver.unobserve(document.getElementById(resizeableImageIds[i]));
+        }
     }
     resizeableImageIds=[];
     optionsPerQ = [];

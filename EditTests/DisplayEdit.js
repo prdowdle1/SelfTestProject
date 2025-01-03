@@ -98,7 +98,14 @@ function displayTest(testInfo){
 
     let archived_sel =document.createElement("select");
     archived_sel.id="archive-select";
+
+    let viewButton = document.createElement("button");
+    viewButton.classList.add("button");
+    viewButton.setAttribute("onclick","getArchive()");
+    viewButton.innerText="View Archive";
+
     archive_div.appendChild(archived_sel);
+    archive_div.appendChild(viewButton);
 
     let optEl = document.createElement("option");
     optEl.innerText='--select archived--'
@@ -108,8 +115,8 @@ function displayTest(testInfo){
     archived_sel.selectedIndex=0;
 
     for(let i =0;i<testInfo.length;i++){
-        if(!testInfo[i].archived_date){
-            test.push(testInfo[i])
+        if(testInfo[i].num_in_test){//if it doesnt have this it is not a question but rather a distinct archived date
+            test.push(testInfo[i]);
         }else{
             let optEl = document.createElement("option");
             optEl.innerText=testInfo[i].archived_date.split('.')[0];

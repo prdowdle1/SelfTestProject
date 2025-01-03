@@ -283,3 +283,15 @@ function scrollPage(direction){
 		window.scrollTo(0,document.body.scrollHeight);
 	}else{window.scrollTo(0,0)}
 }
+
+function getArchive(){
+    let archive_date = document.getElementById('archive-select').value;
+    if(archive_date=='--select--'){
+        feedback.classList.remove('success-class');
+        feedback.classList.add('error-class');
+        feedback.innerText='Select an archive date to view.'
+        return;
+    }
+    feedback.innerText='';
+    retrieveTest('archive',loadedTest,archive_date);
+}
