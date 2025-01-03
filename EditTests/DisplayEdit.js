@@ -9,7 +9,7 @@ dragDummy.addEventListener("dragover", (evt) => evt.preventDefault());
 let hidDraggedDiv = false;
 
 function startTheDrag(event){
-
+    madeChange=true;
     if(!event.target.classList.contains("edit-question-div")){
         event.stopPropagation();
         return;
@@ -92,9 +92,10 @@ function onDrop(event){
 function displayTest(testInfo){
     let test = [];
 
-    let archive_div = document.createElement("div");
+    let archive_div=document.getElementById('archive_div_id');
+    archive_div.innerHTML='';
     archive_div.innerText = "Archived Dates: ";
-    archive_div.classList.add('archived-div');
+
     let archived_sel =document.createElement("select");
     archived_sel.id="archive-select";
     archive_div.appendChild(archived_sel);
@@ -105,8 +106,6 @@ function displayTest(testInfo){
     optEl.disabled=true;
     archived_sel.appendChild(optEl);
     archived_sel.selectedIndex=0;
-
-    startDiv.appendChild(archive_div);
 
     for(let i =0;i<testInfo.length;i++){
         if(!testInfo[i].archived_date){

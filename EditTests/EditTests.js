@@ -21,6 +21,13 @@ let feedback;
 let testLength = 0;
 
 let questionTypes = ["Multiple Choice","Drop Down","Fill in the Blank","Multiple Select"];
+let resizeableImageIds = [];
+
+const resizeObserver = new ResizeObserver((el) => {
+    if(!resizeableImageIds.includes(el[0].target.id)){
+        resizeableImageIds.push(el[0].target.id);
+    }else{madeChange=true;}
+});
 
 window.addEventListener('load', function () {
     feedback=document.getElementById("feedback");
@@ -71,7 +78,11 @@ function getTestNames(){
 
     let viewing = document.createElement("div");
     viewing.id='visible-test';
-    viewing.classList.add('visible-test-name')
+    viewing.classList.add('visible-test-name');
+
+    let archive_div = document.createElement("div");
+    archive_div.classList.add('archived-div');
+    archive_div.id='archive_div_id';
 
     let lastUpdate = document.createElement("span");
     lastUpdate.id='lastUpdated';
@@ -136,7 +147,8 @@ function getTestNames(){
             submitSelectionDiv.appendChild(headButtonDiv);
             startDiv.appendChild(submitSelectionDiv);
             startDiv.appendChild(viewing);
-            startDiv.appendChild(lastUpdate)
+            startDiv.appendChild(lastUpdate);
+            startDiv.appendChild(archive_div);
         }
     }
     xmlHttp.open("POST", 'https://www-bd.fnal.gov/cgi-mcr/pdowdle/editSelfTest.pl',true);
@@ -336,6 +348,9 @@ function createImageDiv(numInTest,imgNum,image){
 
     let imageWrapper = document.createElement('div');
     imageWrapper.classList.add("image-wrapper");
+    imageWrapper.id=numInTest+"img"+imgNum+"image-wrapper";
+
+    resizeObserver.observe(imageWrapper);
 
     let thisImg = document.createElement("img");
     thisImg.src=image;
@@ -545,6 +560,7 @@ function displayActive(theNames){
 }
 
 function swapBetweenSubPages(from){
+
     if(from=='retrieve'){
         document.getElementById('editActiveButton').setAttribute("disabled","disabled");
         document.getElementById('editImages').setAttribute("disabled","disabled");
@@ -568,6 +584,10 @@ function swapBetweenSubPages(from){
             return false;
         }
     }
+    for(let i =0;i<resizeableImageIds.length;i++){
+        resizeObserver.unobserve(document.getElementById(resizeableImageIds[i]));
+    }
+    resizeableImageIds=[];
     optionsPerQ = [];
     ansPerQ= [];
 
@@ -578,6 +598,7 @@ function swapBetweenSubPages(from){
     deletedIds = [];
     deletedIdsCount = 0;
 
+    document.getElementById('archive_div_id').innerHTML='';
     document.getElementById('new-question').innerHTML = '';
     document.getElementById("edit-test").innerHTML="";
     document.getElementById('lastUpdated').innerHTML ="";

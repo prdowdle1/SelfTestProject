@@ -1,6 +1,7 @@
 -special characters
 -add answer slot if hits 20??
 -grade test on backend?
+-resize image does not trigger change, where is the event?!
 
 LONGER
 -link to wiki pages, justify correct answers, lst correct answers
